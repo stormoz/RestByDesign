@@ -15,6 +15,7 @@ namespace RestByDesign
 
             Database.SetInitializer(new RestByDesignContextInitializer());
             DependenciesConfig.Configure();
+            MappingRegistration.RegisterMappings();
 
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

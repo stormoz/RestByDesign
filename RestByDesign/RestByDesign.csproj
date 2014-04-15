@@ -189,6 +189,7 @@
     <Compile Include="Infrastructure\DataAccess\GenericRepository.cs" />
     <Compile Include="Infrastructure\DataAccess\IGenericRepository.cs" />
     <Compile Include="Infrastructure\Mappers\ModelMapper.cs" />
+    <Compile Include="MappingRegistration.cs" />
     <Compile Include="Models\AccountModel.cs" />
     <Compile Include="Models\ClientModel.cs" />
     <Compile Include="Models\Helpers\PagingInfo.cs" />

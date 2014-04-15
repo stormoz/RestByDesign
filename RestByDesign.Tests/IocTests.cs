@@ -1,9 +1,6 @@
-﻿using System;
-using System.Web.Http;
-using Autofac;
+﻿using Autofac;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PersonalBanking.Domain.Model;
-using RestByDesign.Infrastructure;
 using RestByDesign.Infrastructure.DataAccess;
 using RestByDesign.Models;
 using Shouldly;
