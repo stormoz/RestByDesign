@@ -5,7 +5,16 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestByDesign", "RestByDesign\RestByDesign.csproj", "{0D7A2EE9-DAA8-4B2F-A101-CB4407F1298F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestByDesign.Tests", "..\..\Users\konstantinstormozhev\Documents\Visual Studio 2013\Projects\RestByDesign\RestByDesign.Tests\RestByDesign.Tests.csproj", "{0CED099A-B9E5-4578-A498-DF62AEF15BAF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestByDesign.Tests", "RestByDesign.Tests\RestByDesign.Tests.csproj", "{0CED099A-B9E5-4578-A498-DF62AEF15BAF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{06AB9D36-76A1-40C3-8657-E4A18CA4B394}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalBanking", "PersonalBanking\PersonalBanking.csproj", "{73CB0189-B985-4124-B9E7-BE720FED470B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +30,10 @@ Global
 		{0CED099A-B9E5-4578-A498-DF62AEF15BAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0CED099A-B9E5-4578-A498-DF62AEF15BAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0CED099A-B9E5-4578-A498-DF62AEF15BAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73CB0189-B985-4124-B9E7-BE720FED470B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73CB0189-B985-4124-B9E7-BE720FED470B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73CB0189-B985-4124-B9E7-BE720FED470B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73CB0189-B985-4124-B9E7-BE720FED470B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
