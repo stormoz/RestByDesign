@@ -1,4 +1,5 @@
 ﻿using PersonalBanking.Domain.Model;
+using RestByDesign.Controllers.Base;
 using RestByDesign.Infrastructure.DataAccess;
 using RestByDesign.Infrastructure.Extensions;
 using RestByDesign.Infrastructure.Mappers;

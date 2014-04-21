@@ -25,6 +25,9 @@ namespace RestByDesign
             builder.Register(c => new DummyGenericRepository<Client, string>(DummyDataHelper.GetClients()))
                 .As<IGenericRepository<Client, string>>()
                 .SingleInstance();
+            builder.Register(c => new DummyGenericRepository<Account, string>(DummyDataHelper.GetAccounts()))
+                .As<IGenericRepository<Account, string>>()
+                .SingleInstance();
 #else
             builder.RegisterType<RestByDesignContext>()
                 .AsSelf()

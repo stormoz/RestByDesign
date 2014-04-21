@@ -1,10 +1,9 @@
-
-
 using System.Collections.Generic;
+using PersonalBanking.Domain.Model.Core;
 
 namespace PersonalBanking.Domain.Model
 {
-    public class Account
+    public class Account : IEntity<string>
     {
         public Account()
         {
@@ -22,6 +21,7 @@ namespace PersonalBanking.Domain.Model
         public string Id { get; set; }
         public string Name { get; set; }
         public decimal Balance { get; set; }
+        public string ClientId { get; set; }
         public bool Closed { get; set; }
         public IList<SmartTag> SmartTags { get; set; }
         public IList<Transaction> Transactions { get; set; } 

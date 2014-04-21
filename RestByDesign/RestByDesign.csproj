@@ -197,7 +197,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
-    <Compile Include="Controllers\BaseApiController.cs" />
+    <Compile Include="Controllers\Base\BaseApiController.cs" />
     <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Infrastructure\JSend\FailResult.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -226,7 +226,7 @@
     <Compile Include="Infrastructure\JSend\JSendStatus.cs" />
     <Compile Include="Infrastructure\Mappers\ModelMapper.cs" />
     <Compile Include="Infrastructure\OData\ODataHelper.cs" />
-    <Compile Include="MappingRegistration.cs" />
+    <Compile Include="App_Start\MappingRegistration.cs" />
     <Compile Include="Models\AccountModel.cs" />
     <Compile Include="Models\Base\BaseModel.cs" />
     <Compile Include="Models\ClientModel.cs" />

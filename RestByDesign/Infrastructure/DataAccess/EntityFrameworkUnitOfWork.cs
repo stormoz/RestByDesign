@@ -6,18 +6,17 @@ namespace RestByDesign.Infrastructure.DataAccess
     public class EntityFrameworkUnitOfWork : IUnitOfWork
     {
         private readonly RestByDesignContext _context;
-        private readonly IGenericRepository<Client, string> _clientRepository;
+        public IGenericRepository<Client, string> ClientRepository { get; private set; }
+        public IGenericRepository<Account, string> AccountRepository { get; private set; }
 
-        public EntityFrameworkUnitOfWork(RestByDesignContext context, IGenericRepository<Client, string> clientRepository)
+        public EntityFrameworkUnitOfWork(RestByDesignContext context, 
+            IGenericRepository<Client, string> clientRepository,
+            IGenericRepository<Account, string> accountRepository)
         {
             _context = context;
-            _clientRepository = clientRepository;
+            ClientRepository = clientRepository;
+            AccountRepository = accountRepository;
         }
-
-        public IGenericRepository<Client, string> ClientRepository
-        {
-            get { return _clientRepository; }
-        } 
 
         private bool _disposed;
         protected virtual void Dispose(bool disposing)

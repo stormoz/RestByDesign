@@ -76,5 +76,20 @@ namespace RestByDesign
 
             return clients.ToList();
         }
+
+        public static List<Account> GetAccounts()
+        {
+            return new[]
+            {
+                new Account
+                {
+                    Id = "111",
+                    Balance = 1900,
+                    Closed = false,
+                    Name = "Savings",
+                    ClientId = "1"
+                }
+            }.ToList();
+        }
     }
 }

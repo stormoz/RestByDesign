@@ -21,6 +21,12 @@ namespace RestByDesign
                 defaults: new { id = RouteParameter.Optional }
             );
 
+            //config.Routes.MapHttpRoute(
+            //    "ClientAccounts",
+            //    "api/clients/{id}/accounts",
+            //    new { Controller = "Accounts", Action = "GetByClientId" }
+            //);
+
             // Content-negotiation
 #if (DEBUG)
             GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();

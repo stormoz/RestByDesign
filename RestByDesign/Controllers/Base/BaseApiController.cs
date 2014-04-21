@@ -3,7 +3,7 @@ using System.Web.Http;
 using RestByDesign.Infrastructure.DataAccess;
 using RestByDesign.Infrastructure.JSend;
 
-namespace RestByDesign.Controllers
+namespace RestByDesign.Controllers.Base
 {
     public abstract class BaseApiController : ApiController
     {

@@ -17,8 +17,11 @@ namespace PersonalBanking.Domain.Model
             Deleted = deleted;
         }
 
+        public int Version { get; set; }
+
         public string Id { get; set; }
         public DateTime OrderedDateTime { get; set; }
+
         public bool Active { get; set; }
         public bool Deleted { get; set; }
     }

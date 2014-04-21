@@ -9,6 +9,7 @@ namespace RestByDesign
         public static void RegisterMappings()
         {
             ModelMapper.AddMapping<Client, ClientModel>(client => new ClientModel { Id = client.Id, Name = client.Name });
+            ModelMapper.AddMapping<Account, AccountModel>(account => new AccountModel { Id = account.Id, Name = account.Name });
         }
     }
 }

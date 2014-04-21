@@ -4,17 +4,16 @@ namespace RestByDesign.Infrastructure.DataAccess
 {
     public class DummyUnitOfWork : IUnitOfWork
     {
-        private readonly IGenericRepository<Client, string> _clientRepository;
+        public IGenericRepository<Client, string> ClientRepository { get; private set; }
+        public IGenericRepository<Account, string> AccountRepository { get; private set; }
 
-        public DummyUnitOfWork(IGenericRepository<Client, string> clientRepository)
+        public DummyUnitOfWork(
+            IGenericRepository<Client, string> clientRepository,
+            IGenericRepository<Account, string> accountRepository)
         {
-            _clientRepository = clientRepository;
+            ClientRepository = clientRepository;
+            AccountRepository = accountRepository;
         }
-
-        public IGenericRepository<Client, string> ClientRepository
-        {
-            get { return _clientRepository; }
-        } 
 
         public void Dispose()
         { }
