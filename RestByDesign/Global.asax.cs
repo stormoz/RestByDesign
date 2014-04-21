@@ -17,7 +17,7 @@ namespace RestByDesign
 
             //Web Api config
             GlobalConfiguration.Configure(WebApiConfig.Register);
-
+            
 #if (!DEBUG)
             //Initialise DB
             Database.SetInitializer(new RestByDesignContextInitializer());

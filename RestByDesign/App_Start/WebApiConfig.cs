@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Net.Http.Formatting;
 using System.Web.Http;
-//using CacheCow.Server;
+using CacheCow.Server;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using RestByDesign.Infrastructure.JSend;
@@ -32,8 +32,8 @@ namespace RestByDesign
 #if (DEBUG)
             jsonFormatter.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
 #endif
-
-            //config.MessageHandlers.Add(new CachingHandler(config));
+            // Etag-cache config for Get methods
+            config.MessageHandlers.Add(new CachingHandler(config));
 
             // Jsend
             config.MessageHandlers.Add(new JSendMessageHandler());
