@@ -3,29 +3,27 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using RestByDesign.Models;
 using PersonalBanking.Domain.Model.Core;
+using RestByDesign.Models.Helpers;
 
 namespace RestByDesign.Infrastructure.DataAccess
 {
-    public abstract class GenericRepository<TEntity, TKey> : IGenericRepository<TEntity, TKey> where TEntity : class, IEntity<TKey>
+    public class DummyGenericRepository<TEntity, TKey> : IGenericRepository<TEntity, TKey> where TEntity : class, IEntity<TKey>
     {
-        internal  RestByDesignContext Context;
-        internal DbSet<TEntity> DbSet;
+        private List<TEntity> list;
 
-        protected GenericRepository(RestByDesignContext context)
+        public DummyGenericRepository(List<TEntity> dymmyData)
         {
-            Context = context;
-            DbSet = context.Set<TEntity>();
+            list = dymmyData;
         }
 
         public virtual IEnumerable<TEntity> Get(
-            Expression<Func<TEntity,bool>> filter = null,
+            Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>,IOrderedQueryable<TEntity>> orderBy = null,
             PagingInfo pagingInfo = null,
             string includeProperties = "")
         {
-            IQueryable<TEntity> query = DbSet;
+            IQueryable<TEntity> query = list.AsQueryable();
 
             if (filter != null)
                 query = query.Where(filter);
@@ -44,36 +42,39 @@ namespace RestByDesign.Infrastructure.DataAccess
 
         public virtual TEntity GetById(
             TKey id,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            PagingInfo pagingInfo = null,
             string includeProperties = "")
         {
-            return DbSet.Find(id);
+            IQueryable<TEntity> query = list.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(includeProperties))
+            {
+                var props = includeProperties.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                query = props.Aggregate(query, (current, prop) => current.Include(prop));
+            }
+
+            return query.Single(item => item.Equals(id));
         }
 
         public virtual void Insert(TEntity entity)
         {
-            DbSet.Add(entity);
+            list.Add(entity);
         }
 
         public virtual void Delete(TKey id)
         {
-            TEntity entityToDelete = DbSet.Find(id);
-            Delete(entityToDelete);
+            TEntity entityToDelete = list.Single(item => item.Id.Equals(id));
+            list.Remove(entityToDelete);
         }
 
         public virtual void Delete(TEntity entityToDelete)
         {
-            if (Context.Entry(entityToDelete).State == EntityState.Detached)
-                DbSet.Attach(entityToDelete);
-
-            DbSet.Remove(entityToDelete);
+            list.Remove(entityToDelete);
         }
 
         public virtual void Update(TEntity entityToUpdate)
         {
-            DbSet.Attach(entityToUpdate);
-            Context.Entry(entityToUpdate).State = EntityState.Modified;
+            Delete(entityToUpdate.Id);
+            Insert(entityToUpdate);
         }
     }
 }

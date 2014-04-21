@@ -1,11 +1,17 @@
 using System;
 using System.Linq;
 
-namespace RestByDesign.Models
+namespace RestByDesign.Models.Helpers
 {
     public class PagingInfo
     {
-        public PagingInfo(int skip = 0, int take = 10)
+        public PagingInfo()
+        {
+            Skip = 0;
+            Take = 10;
+        }
+
+        public PagingInfo(int skip, int take)
         {
             if(take <= 0)
                 throw new ArgumentOutOfRangeException("take");

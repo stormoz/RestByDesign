@@ -20,5 +20,6 @@ namespace PersonalBanking.Domain.Model
         public string Id { get; set; }
         public string Name { get; set; }
         public IList<Account> Accounts { get; set; }
+        public string Id_Name { get { return Id + Name; } }
     }
 }

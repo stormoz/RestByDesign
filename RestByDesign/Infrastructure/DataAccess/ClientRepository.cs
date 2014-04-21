@@ -1,10 +1,9 @@
 ﻿using System;
 using PersonalBanking.Domain.Model;
-using RestByDesign.Models;
 
 namespace RestByDesign.Infrastructure.DataAccess
 {
-    public class ClientRepository : GenericRepository<Client, string>
+    public class ClientRepository : EfGenericRepository<Client, string>
     {
         public ClientRepository(RestByDesignContext context) : base(context)
         {

@@ -54,7 +54,7 @@ namespace RestByDesign.Areas.HelpPage
         /// stopping when the factory successfully returns a non-<see langref="null"/> object.
         /// </summary>
         /// <remarks>
-        /// Collection includes just <see cref="ObjectGenerator.GenerateObject(Type)"/> initially. Use
+        /// List includes just <see cref="ObjectGenerator.GenerateObject(Type)"/> initially. Use
         /// <code>SampleObjectFactories.Insert(0, func)</code> to provide an override and
         /// <code>SampleObjectFactories.Add(func)</code> to provide a fallback.</remarks>
         [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures",

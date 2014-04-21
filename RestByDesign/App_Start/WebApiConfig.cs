@@ -1,8 +1,9 @@
 ﻿using System.Linq;
 using System.Net.Http.Formatting;
 using System.Web.Http;
-using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
+using RestByDesign.Infrastructure.JSend;
 
 namespace RestByDesign
 {
@@ -19,11 +20,19 @@ namespace RestByDesign
                 defaults: new { id = RouteParameter.Optional }
             );
 
+            // Content-negotiation
+#if (DEBUG)
             GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
+#endif
 
             var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().Single();
             jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            jsonFormatter.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+            jsonFormatter.SerializerSettings.Converters.Add(new JavaScriptDateTimeConverter());
+#if (DEBUG)
+            jsonFormatter.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
+#endif
+            // Jsend
+            config.MessageHandlers.Add(new JSendMessageHandler());
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.Http;
 using RestByDesign.Models;
+using RestByDesign.Models.Helpers;
 
 namespace RestByDesign.Controllers
 {

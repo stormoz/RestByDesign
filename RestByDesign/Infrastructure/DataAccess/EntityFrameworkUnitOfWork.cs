@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Data.Entity;
 using PersonalBanking.Domain.Model;
-using RestByDesign.Models;
 
 namespace RestByDesign.Infrastructure.DataAccess
 {
@@ -44,5 +42,4 @@ namespace RestByDesign.Infrastructure.DataAccess
             _context.SaveChanges();
         }
     }
-
 }

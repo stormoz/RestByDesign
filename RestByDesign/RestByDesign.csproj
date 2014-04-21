@@ -60,6 +60,14 @@
       <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Data.Edm, Version=5.6.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Data.Edm.5.6.1\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.6.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Data.OData.5.6.1\lib\net40\Microsoft.Data.OData.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -72,6 +80,10 @@
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.1.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Spatial, Version=5.6.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\System.Spatial.5.6.1\lib\net40\System.Spatial.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -84,6 +96,10 @@
     <Reference Include="System.Web.Http, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.1.2\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.OData, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.OData.5.1.2\lib\net45\System.Web.Http.OData.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Http.WebHost, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -140,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\DummyDataHelper.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\DependenciesConfig.cs" />
     <Compile Include="App_Start\IocHelper.cs" />
@@ -183,17 +200,30 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\Core\CamelCaseStringEnumConverter.cs" />
+    <Compile Include="Infrastructure\Core\WritablePropertiesOnlyResolver.cs" />
     <Compile Include="Infrastructure\DataAccess\ClientRepository.cs" />
+    <Compile Include="Infrastructure\DataAccess\DummyGenericRepository.cs" />
+    <Compile Include="Infrastructure\DataAccess\DummyUnitOfWork.cs" />
     <Compile Include="Infrastructure\DataAccess\EntityFrameworkUnitOfWork.cs" />
     <Compile Include="Infrastructure\DataAccess\IUnitOfWork.cs" />
-    <Compile Include="Infrastructure\DataAccess\GenericRepository.cs" />
+    <Compile Include="Infrastructure\DataAccess\EfGenericRepository.cs" />
     <Compile Include="Infrastructure\DataAccess\IGenericRepository.cs" />
+    <Compile Include="Infrastructure\Extensions\CollectionExtensions.cs" />
+    <Compile Include="Models\Helpers\CollectionWrapper.cs" />
+    <Compile Include="Models\Helpers\Fields.cs" />
+    <Compile Include="Infrastructure\JSend\JSendMessageHandler.cs" />
+    <Compile Include="Infrastructure\JSend\JSendPayload.cs" />
+    <Compile Include="Infrastructure\JSend\JSendStatus.cs" />
     <Compile Include="Infrastructure\Mappers\ModelMapper.cs" />
+    <Compile Include="Infrastructure\OData\ODataHelper.cs" />
     <Compile Include="MappingRegistration.cs" />
     <Compile Include="Models\AccountModel.cs" />
+    <Compile Include="Models\Base\BaseModel.cs" />
     <Compile Include="Models\ClientModel.cs" />
+    <Compile Include="Models\Helpers\FieldsHelper.cs" />
     <Compile Include="Models\Helpers\PagingInfo.cs" />
-    <Compile Include="Models\RestByDesignContext.cs" />
+    <Compile Include="Infrastructure\DataAccess\RestByDesignContext.cs" />
     <Compile Include="App_Start\RestByDesignContextInitializer.cs" />
     <Compile Include="Models\SmartTagModel.cs" />
     <Compile Include="Models\Helpers\TransactionFilter.cs" />

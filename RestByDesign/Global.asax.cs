@@ -1,4 +1,7 @@
-﻿using System.Data.Entity;
+﻿#if (!DEBUG)
+using System.Data.Entity;
+#endif
+
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -11,10 +14,18 @@ namespace RestByDesign
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
+
+            //Web Api config
             GlobalConfiguration.Configure(WebApiConfig.Register);
 
+#if (!DEBUG)
+            //Initialise DB
             Database.SetInitializer(new RestByDesignContextInitializer());
+#endif
+            //Configure DI
             DependenciesConfig.Configure();
+
+            //Configure mappings
             MappingRegistration.RegisterMappings();
 
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

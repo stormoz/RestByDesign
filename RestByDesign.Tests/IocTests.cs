@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PersonalBanking.Domain.Model;
 using RestByDesign.Infrastructure.DataAccess;
-using RestByDesign.Models;
 using Shouldly;
 
 namespace RestByDesign.Tests
@@ -14,15 +13,20 @@ namespace RestByDesign.Tests
 
         public IocTests()
         {
-            container = IocHelper.CreateContainer();
+            container = IocHelper.CreateContainer(DependenciesConfig.ConfigureMappings);
         }
 
         [TestMethod]
         public void TestIocConfiguration()
         {
+#if DEBUG
+            ShouldBeAbleToResolve<IUnitOfWork, DummyUnitOfWork>();
+            ShouldBeAbleToResolve<IGenericRepository<Client, string>, DummyGenericRepository<Client, string>>();
+#else
             ShouldBeAbleToResolve<IUnitOfWork, EntityFrameworkUnitOfWork>();
             ShouldBeAbleToResolve<RestByDesignContext, RestByDesignContext>();
             ShouldBeAbleToResolve<IGenericRepository<Client, string>, ClientRepository>();
+#endif
         }
 
         private void ShouldBeAbleToResolve<IT, T>()
