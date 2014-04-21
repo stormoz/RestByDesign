@@ -140,6 +140,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TransactionHistory.feature</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\ClientsControllerTests.cs" />
     <Compile Include="Infrastructure\CollectionExtensionsTests.cs" />
     <Compile Include="MappingTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

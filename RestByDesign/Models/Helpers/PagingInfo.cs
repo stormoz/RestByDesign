@@ -5,26 +5,38 @@ namespace RestByDesign.Models.Helpers
 {
     public class PagingInfo
     {
+        private int _skip;
+        private int _take;
+
         public PagingInfo()
         {
             Skip = 0;
             Take = 10;
         }
 
-        public PagingInfo(int skip, int take)
+        public int Skip
         {
-            if(take <= 0)
-                throw new ArgumentOutOfRangeException("take");
+            get { return _skip; }
+            set
+            {
+                if (value < 0)
+                    throw new ArgumentOutOfRangeException("skip");
 
-            if (take < 0)
-                throw new ArgumentOutOfRangeException("skip");
-
-            Skip = skip;
-            Take = take;
+                _skip = value;
+            }
         }
 
-        public int Skip { get; private set; }
-        public int Take { get; private set; }
+        public int Take
+        {
+            get { return _take; }
+            set
+            {
+                if (value <= 0)
+                    throw new ArgumentOutOfRangeException("take");
+
+                _take = value;
+            }
+        }
 
         public IQueryable<TEntity> GetPagedQuery<TEntity>(IQueryable<TEntity> query) where TEntity : class
         {

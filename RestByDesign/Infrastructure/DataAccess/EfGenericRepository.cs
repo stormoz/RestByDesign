@@ -54,7 +54,7 @@ namespace RestByDesign.Infrastructure.DataAccess
                 query = props.Aggregate(query, (current, prop) => current.Include(prop));
             }
 
-            return query.Single(item => item.Equals(id));
+            return query.FirstOrDefault(item => item.Equals(id));
         }
 
         public virtual void Insert(TEntity entity)
@@ -64,7 +64,7 @@ namespace RestByDesign.Infrastructure.DataAccess
 
         public virtual void Delete(TKey id)
         {
-            TEntity entityToDelete = DbSet.Find(id);
+            TEntity entityToDelete = DbSet.Single(item => item.Id.Equals(id));
             Delete(entityToDelete);
         }
 

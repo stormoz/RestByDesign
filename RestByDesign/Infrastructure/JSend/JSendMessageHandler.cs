@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
+using RestByDesign.Controllers;
 
 namespace RestByDesign.Infrastructure.JSend
 {
@@ -10,6 +11,7 @@ namespace RestByDesign.Infrastructure.JSend
     {
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
+            
             return base.SendAsync(request, cancellationToken)
                 .ContinueWith(t =>
                 {
@@ -44,6 +46,11 @@ namespace RestByDesign.Infrastructure.JSend
                         });
                     }
 
+                    if (responseObject is JSendPayload)
+                    {
+                        return request.CreateResponse(responseObject);
+                    }
+
                     var errorContent = t.Result.Content as ObjectContent<HttpError>;
                     if (errorContent != null)
                     {
@@ -56,7 +63,7 @@ namespace RestByDesign.Infrastructure.JSend
                         });
                     }
 
-                    return request.CreateResponse(new JSendPayload
+                    return request.CreateResponse(new SuccessJSendPayload
                     {
                         Status = JSendStatus.Success,
                         Data = responseObject

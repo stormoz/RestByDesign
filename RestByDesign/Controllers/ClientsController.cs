@@ -1,12 +1,11 @@
-﻿using System.Net;
-using System.Web.Http;
-using PersonalBanking.Domain.Model;
+﻿using PersonalBanking.Domain.Model;
 using RestByDesign.Infrastructure.DataAccess;
 using RestByDesign.Infrastructure.Extensions;
 using RestByDesign.Infrastructure.Mappers;
 using RestByDesign.Models;
 using RestByDesign.Models.Helpers;
-
+using System.Net;
+using System.Web.Http;
 
 namespace RestByDesign.Controllers
 {
@@ -16,9 +15,13 @@ namespace RestByDesign.Controllers
         {  }
 
         //GET /clients/123
-        public object GetById(string id, string fields = null)
+        public IHttpActionResult GetById(string id, string fields = null)
         {
             var client = UnitOfWork.ClientRepository.GetById(id);
+
+            if (client == null)
+                return NotFound();
+
             var clientModel = ModelMapper.Map<Client, ClientModel>(client);
 
             return Ok(clientModel.SelectFields(fields));
@@ -52,15 +55,6 @@ namespace RestByDesign.Controllers
             var clientModel = ModelMapper.Map<Client, ClientModel>(client);
 
             return ODataHelper.Single(clientModel);
-        }
-
-        [Queryable(AllowedQueryOptions = AllowedQueryOptions.Select)]
-        public IQueryable<ClientModel> Get()
-        {
-            var clients = UnitOfWork.ClientRepository.Get();
-            var clientModel = ModelMapper.Map<Client, ClientModel>(clients);
-
-            return ODataHelper.List(clientModel);
         }
         */
     }

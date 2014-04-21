@@ -1,5 +1,7 @@
+using System.Net;
 using System.Web.Http;
 using RestByDesign.Infrastructure.DataAccess;
+using RestByDesign.Infrastructure.JSend;
 
 namespace RestByDesign.Controllers
 {
@@ -19,6 +21,11 @@ namespace RestByDesign.Controllers
         {
             _uow.Dispose();
             base.Dispose(disposing);
+        }
+
+        protected IHttpActionResult Fail(string message, HttpStatusCode httpCode = HttpStatusCode.BadRequest, object data = null)
+        {
+            return new FailResult(httpCode, message, data, this);
         }
     }
 }

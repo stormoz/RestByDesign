@@ -53,6 +53,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Autofac.WebApi2.3.2.1\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
     </Reference>
+    <Reference Include="CacheCow.Common">
+      <HintPath>..\packages\CacheCow.Common.0.5.1\lib\net40\CacheCow.Common.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -193,6 +196,7 @@
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\ClientsController.cs" />
+    <Compile Include="Infrastructure\JSend\FailResult.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SmartTagsController.cs" />
     <Compile Include="Controllers\TransactionsController.cs" />
@@ -210,6 +214,7 @@
     <Compile Include="Infrastructure\DataAccess\EfGenericRepository.cs" />
     <Compile Include="Infrastructure\DataAccess\IGenericRepository.cs" />
     <Compile Include="Infrastructure\Extensions\CollectionExtensions.cs" />
+    <Compile Include="Infrastructure\JSend\SuccessJSendPayload.cs" />
     <Compile Include="Models\Helpers\CollectionWrapper.cs" />
     <Compile Include="Models\Helpers\Fields.cs" />
     <Compile Include="Infrastructure\JSend\JSendMessageHandler.cs" />

@@ -8,6 +8,7 @@ namespace RestByDesign.Infrastructure.JSend
         [JsonConverter(typeof(CamelCaseStringEnumConverter))]
         public JSendStatus Status { get; set; }
 
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public object Data { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]

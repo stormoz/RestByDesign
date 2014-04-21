@@ -28,12 +28,6 @@ namespace RestByDesign.Infrastructure.DataAccess
             if (filter != null)
                 query = query.Where(filter);
 
-            if (!string.IsNullOrWhiteSpace(includeProperties))
-            {
-                var props = includeProperties.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries);
-                query = props.Aggregate(query, (current, prop) => current.Include(prop));
-            }
-
             if (pagingInfo != null)
                 query = pagingInfo.GetPagedQuery(query);
 
@@ -44,15 +38,7 @@ namespace RestByDesign.Infrastructure.DataAccess
             TKey id,
             string includeProperties = "")
         {
-            IQueryable<TEntity> query = list.AsQueryable();
-
-            if (!string.IsNullOrWhiteSpace(includeProperties))
-            {
-                var props = includeProperties.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                query = props.Aggregate(query, (current, prop) => current.Include(prop));
-            }
-
-            return query.Single(item => item.Equals(id));
+            return list.FirstOrDefault(item => item.Id.Equals(id));
         }
 
         public virtual void Insert(TEntity entity)
