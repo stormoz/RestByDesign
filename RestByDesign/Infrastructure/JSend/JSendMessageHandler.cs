@@ -1,9 +1,9 @@
 ﻿using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
-using RestByDesign.Controllers;
 
 namespace RestByDesign.Infrastructure.JSend
 {
@@ -11,7 +11,6 @@ namespace RestByDesign.Infrastructure.JSend
     {
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            
             return base.SendAsync(request, cancellationToken)
                 .ContinueWith(t =>
                 {
@@ -46,21 +45,28 @@ namespace RestByDesign.Infrastructure.JSend
                         });
                     }
 
-                    if (responseObject is JSendPayload)
+                    var jsendResponse = responseObject as JSendPayload;
+                    if (jsendResponse != null)
                     {
-                        return request.CreateResponse(responseObject);
+                        return jsendResponse.Code != null ?
+                            request.CreateResponse((HttpStatusCode)jsendResponse.Code, responseObject) :
+                            request.CreateResponse(responseObject);
                     }
 
-                    var errorContent = t.Result.Content as ObjectContent<HttpError>;
-                    if (errorContent != null)
+                    //var errorContent = t.Result.Content as ObjectContent<HttpError>;
+                    //if (errorContent != null || (int)t.Result.StatusCode >= 400)
+
+                    if ((int)t.Result.StatusCode >= 400)
                     {
-                        return request.CreateResponse(new JSendPayload
-                        {
-                            Status = JSendStatus.Error,
-                            Message = t.Result.ReasonPhrase,
-                            Code = (int)t.Result.StatusCode,
-                            Data = responseObject
-                        });
+                        return request.CreateResponse(
+                            t.Result.StatusCode,
+                            new JSendPayload
+                            {
+                                Status = JSendStatus.Error,
+                                Message = t.Result.ReasonPhrase,
+                                Code = (int)t.Result.StatusCode,
+                                Data = responseObject
+                            });
                     }
 
                     return request.CreateResponse(new SuccessJSendPayload

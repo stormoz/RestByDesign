@@ -35,6 +35,9 @@ namespace RestByDesign
             // Etag-cache config for Get methods
             config.MessageHandlers.Add(new CachingHandler(config));
 
+            // HEAD verb support
+            config.MessageHandlers.Add(new CachingHandler(config));
+
             // Jsend
             config.MessageHandlers.Add(new JSendMessageHandler());
         }
