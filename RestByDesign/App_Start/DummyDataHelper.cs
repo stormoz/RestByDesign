@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using PersonalBanking.Domain.Model;
 
@@ -88,6 +89,21 @@ namespace RestByDesign
                     Closed = false,
                     Name = "Savings",
                     ClientId = "1"
+                }
+            }.ToList();
+        }
+
+        public static List<SmartTag> GetSmartTags()
+        {
+            return new[]
+            {
+                new SmartTag
+                {
+                    Id = "1",
+                    AccountId = "111",
+                    Active = true,
+                    Deleted = false,
+                    OrderedDateTime = new DateTime(2014, 02, 1)
                 }
             }.ToList();
         }

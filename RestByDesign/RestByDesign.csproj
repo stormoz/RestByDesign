@@ -161,6 +161,7 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\AreaAwareViewEngine.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\DummyDataHelper.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -168,6 +169,7 @@
     <Compile Include="App_Start\IocHelper.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="App_Start\RazorAreaAwareViewEngine.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
     <Compile Include="Areas\HelpPage\Controllers\HelpController.cs" />
@@ -199,6 +201,9 @@
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\Base\BaseApiController.cs" />
     <Compile Include="Controllers\ClientsController.cs" />
+    <Compile Include="Infrastructure\Attributes\NotPatchableAttribute.cs" />
+    <Compile Include="Infrastructure\Extensions\ModelStateExtensions.cs" />
+    <Compile Include="Infrastructure\Extensions\StringExtensions.cs" />
     <Compile Include="Infrastructure\JSend\FailResult.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SmartTagsController.cs" />

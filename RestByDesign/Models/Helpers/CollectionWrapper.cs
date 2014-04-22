@@ -22,7 +22,5 @@ namespace RestByDesign.Models.Helpers
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public int? Next { get; private set; }
-
-        public DateTime TestDateTime { get { return DateTime.Now; } }
     }
 }

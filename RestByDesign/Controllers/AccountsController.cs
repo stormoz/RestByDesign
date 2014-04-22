@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
 using System.Web.Http;
 using PersonalBanking.Domain.Model;
 using RestByDesign.Controllers.Base;
@@ -7,6 +8,7 @@ using RestByDesign.Infrastructure.DataAccess;
 using RestByDesign.Infrastructure.Extensions;
 using RestByDesign.Infrastructure.Mappers;
 using RestByDesign.Models;
+using RestByDesign.Models.Helpers;
 
 namespace RestByDesign.Controllers
 {
@@ -19,14 +21,14 @@ namespace RestByDesign.Controllers
         [Route("api/clients/{clientId}/accounts")]
         public IHttpActionResult GetByClientId(string clientId, string fields = null)
         {
-            var accounts = UnitOfWork.AccountRepository.Get(acc => acc.ClientId.Equals(clientId));
+            var accounts = UnitOfWork.AccountRepository.Get(acc => acc.ClientId.Equals(clientId)).ToList();
 
-            if (accounts == null || !accounts.Any())
+            if (!accounts.Any())
                 return NotFound();
 
-            var clientModel = ModelMapper.Map<Account, AccountModel>(accounts);
+            var accountModel = ModelMapper.Map<Account, AccountModel>(accounts);
 
-            return Ok(clientModel.SelectFields(fields));
+            return Ok(accountModel.SelectFields(fields));
         }
 
         //GET /clients/123/accounts/2
@@ -34,28 +36,42 @@ namespace RestByDesign.Controllers
         public IHttpActionResult Get(string clientId, int accountNum, string fields = null)
         {
             var account = UnitOfWork.AccountRepository.Get(acc => acc.ClientId.Equals(clientId),
-                accounts => accounts.OrderBy(acc => acc.Id)).Skip(accountNum - 1).Take(1).FirstOrDefault();
+                accounts => accounts.OrderBy(acc => acc.Id)).Skip(accountNum - 1).Take(1).SingleOrDefault();
 
             if (account == null)
                 return NotFound();
 
-            var clientModel = ModelMapper.Map<Account, AccountModel>(account);
+            var accountModel = ModelMapper.Map<Account, AccountModel>(account);
 
-            return Ok(clientModel.SelectFields(fields));
+            return Ok(accountModel.SelectFields(fields));
         }
 
         //GET /accounts/123456
         [Route("api/accounts/{accountId}")]
         public IHttpActionResult GetById(string accountId, string fields = null)
         {
-            var account = UnitOfWork.AccountRepository.Get(acc => acc.Id.Equals(accountId)).FirstOrDefault();
+            var account = UnitOfWork.AccountRepository.Get(acc => acc.Id.Equals(accountId)).SingleOrDefault();
 
             if (account == null)
                 return NotFound();
 
-            var clientModel = ModelMapper.Map<Account, AccountModel>(account);
+            var accountModel = ModelMapper.Map<Account, AccountModel>(account);
 
-            return Ok(clientModel.SelectFields(fields));
+            return Ok(accountModel.SelectFields(fields));
+        }
+
+        [HttpPost]
+        [HttpPut]
+        [HttpPatch]
+        [HttpDelete]
+        public IHttpActionResult NotAllowed(string id = null)
+        {
+            throw new HttpResponseException(HttpStatusCode.MethodNotAllowed);
+        }
+
+        public IHttpActionResult GetAll()
+        {
+            throw new HttpResponseException(HttpStatusCode.MethodNotAllowed);
         }
     }
 }

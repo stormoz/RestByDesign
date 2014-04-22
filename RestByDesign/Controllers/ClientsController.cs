@@ -34,8 +34,8 @@ namespace RestByDesign.Controllers
             var clients = UnitOfWork.ClientRepository.Get(pagingInfo:pagingInfo);
             var clientsModel = ModelMapper.Map<Client, ClientModel>(clients);
 
-            var data = new CollectionWrapper(clientsModel.SelectFields(fields), pagingInfo);
-            return Ok(data);
+            //var data = new CollectionWrapper(clientsModel.SelectFields(fields), pagingInfo);
+            return Ok(clientsModel.SelectFields(fields));
         }
 
         [HttpPost]

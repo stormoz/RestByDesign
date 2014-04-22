@@ -21,11 +21,11 @@ namespace RestByDesign
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            //config.Routes.MapHttpRoute(
-            //    "ClientAccounts",
-            //    "api/clients/{id}/accounts",
-            //    new { Controller = "Accounts", Action = "GetByClientId" }
-            //);
+            /*config.Routes.MapHttpRoute(
+                "ClientAccounts",
+                "api/clients/{clientId}/accounts",
+                new { controller = "Accounts", action = "GetByClientId" }
+            );*/
 
             // Content-negotiation
 #if (DEBUG)
