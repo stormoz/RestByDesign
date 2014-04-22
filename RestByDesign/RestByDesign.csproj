@@ -202,6 +202,7 @@
     <Compile Include="Controllers\Base\BaseApiController.cs" />
     <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Infrastructure\Attributes\NotPatchableAttribute.cs" />
+    <Compile Include="Infrastructure\Extensions\ExpressionExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\ModelStateExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\StringExtensions.cs" />
     <Compile Include="Infrastructure\JSend\FailResult.cs" />
@@ -224,6 +225,7 @@
     <Compile Include="Infrastructure\Extensions\CollectionExtensions.cs" />
     <Compile Include="Infrastructure\JSend\SuccessJSendPayload.cs" />
     <Compile Include="Infrastructure\MessageHandlers\HeadHandler.cs" />
+    <Compile Include="Models\Enums\TransactionType.cs" />
     <Compile Include="Models\Helpers\CollectionWrapper.cs" />
     <Compile Include="Models\Helpers\Fields.cs" />
     <Compile Include="Infrastructure\JSend\JSendMessageHandler.cs" />

@@ -21,6 +21,7 @@ namespace RestByDesign
                 if (tagModel.Active.HasValue)
                     tag.Active = tagModel.Active.Value;
             });
+            ModelMapper.AddMapping<Transaction, TransactionModel>(tr => new TransactionModel { Id = tr.Id, Amount = tr.Amount, EffectDate = tr.EffectDate});
         }
     }
 }

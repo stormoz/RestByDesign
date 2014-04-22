@@ -1,15 +1,20 @@
 ﻿using System;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Web.Http;
+using PersonalBanking.Domain.Model;
 using RestByDesign.Controllers.Base;
 using RestByDesign.Infrastructure.DataAccess;
+using RestByDesign.Infrastructure.Extensions;
+using RestByDesign.Infrastructure.Mappers;
 using RestByDesign.Models;
+using RestByDesign.Models.Enums;
 using RestByDesign.Models.Helpers;
 
 namespace RestByDesign.Controllers
 {
     public class TransactionsController : BaseApiController
     {
-
         public TransactionsController(IUnitOfWork uow) : base(uow)
         {
         }
@@ -22,9 +27,21 @@ namespace RestByDesign.Controllers
         public IHttpActionResult Get(string accountId,
             string fields = null,
             [FromUri]PagingInfo pagingInfo = null,
-            [FromUri]TransactionFilter transactionFilter = null)
+            [FromUri]TransactionFilter filter = null)
         {
-            throw new NotImplementedException();
+            var transactions = UnitOfWork.TransactionRepository.Get(
+                TransactionSearchExpression(accountId,filter)
+                , pagingInfo: pagingInfo).ToList();
+
+            var transactionsModel = ModelMapper.Map<Transaction, TransactionModel>(transactions);
+
+            return Ok(transactionsModel.SelectFields(fields));
+        }
+
+        private static Expression<Func<Transaction, bool>> TransactionSearchExpression(string accountId, TransactionFilter filter)
+        {
+            Expression<Func<Transaction, bool>> findByAccountId = tr => tr.AccountId.Equals(accountId);
+            return findByAccountId.And(filter.GetFilterExpression());
         }
     }
 }

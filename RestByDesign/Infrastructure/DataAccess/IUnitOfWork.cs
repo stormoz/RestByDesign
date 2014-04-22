@@ -9,6 +9,8 @@ namespace RestByDesign.Infrastructure.DataAccess
         IGenericRepository<Client, string> ClientRepository { get; }
         IGenericRepository<Account, string> AccountRepository { get; }
         IGenericRepository<SmartTag, string> SmartTagRepository { get; }
+        IGenericRepository<Transaction, string> TransactionRepository { get; }
+
         IGenericRepository<TEntity, TKey> GetRepository<TEntity, TKey>() where TEntity : class, IEntity<TKey>;
         void SaveChanges();
     }

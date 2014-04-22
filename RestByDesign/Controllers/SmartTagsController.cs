@@ -21,9 +21,6 @@ namespace RestByDesign.Controllers
         {
             var tags = UnitOfWork.SmartTagRepository.Get(tag => tag.AccountId.Equals(accountId)).ToList();
 
-            if (!tags.Any())
-                return NotFound();
-
             var clientModel = ModelMapper.Map<SmartTag, SmartTagModel>(tags);
 
             return Ok(clientModel.SelectFields(fields));

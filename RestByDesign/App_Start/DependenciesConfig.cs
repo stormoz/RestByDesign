@@ -31,6 +31,9 @@ namespace RestByDesign
             builder.Register(c => new DummyGenericRepository<SmartTag, string>(DummyDataHelper.GetSmartTags()))
                 .As<IGenericRepository<SmartTag, string>>()
                 .SingleInstance();
+            builder.Register(c => new DummyGenericRepository<Transaction, string>(DummyDataHelper.GetTransactions()))
+                .As<IGenericRepository<Transaction, string>>()
+                .SingleInstance();
 #else
             builder.RegisterType<RestByDesignContext>()
                 .AsSelf()

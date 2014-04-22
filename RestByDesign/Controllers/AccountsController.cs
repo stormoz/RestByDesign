@@ -23,9 +23,6 @@ namespace RestByDesign.Controllers
         {
             var accounts = UnitOfWork.AccountRepository.Get(acc => acc.ClientId.Equals(clientId)).ToList();
 
-            if (!accounts.Any())
-                return NotFound();
-
             var accountModel = ModelMapper.Map<Account, AccountModel>(accounts);
 
             return Ok(accountModel.SelectFields(fields));

@@ -107,5 +107,26 @@ namespace RestByDesign
                 }
             }.ToList();
         }
+
+        public static List<Transaction> GetTransactions()
+        {
+            return new[]
+            {
+                new Transaction
+                {
+                    Id = "1",
+                    Amount = 2000,
+                    EffectDate = new DateTime(2014, 3, 20),
+                    AccountId = "111"
+                },
+                new Transaction
+                {
+                    Id = "2",
+                    Amount = -100,
+                    EffectDate = new DateTime(2014, 3, 21),
+                    AccountId = "111"
+                }
+            }.ToList();
+        }
     }
 }

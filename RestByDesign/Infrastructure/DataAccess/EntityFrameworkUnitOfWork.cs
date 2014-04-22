@@ -10,17 +10,21 @@ namespace RestByDesign.Infrastructure.DataAccess
         public IGenericRepository<Client, string> ClientRepository { get; private set; }
         public IGenericRepository<Account, string> AccountRepository { get; private set; }
         public IGenericRepository<SmartTag, string> SmartTagRepository { get; private set; }
+        public IGenericRepository<Transaction, string> TransactionRepository { get; private set; }
 
 
         public EntityFrameworkUnitOfWork(RestByDesignContext context, 
             IGenericRepository<Client, string> clientRepository,
-            IGenericRepository<Account, string> accountRepository,
-            IGenericRepository<SmartTag, string> smartTagRepository)
+            IGenericRepository<Account, string> accountRepository,  
+            IGenericRepository<SmartTag, string> smartTagRepository,
+            IGenericRepository<Transaction, string> transactionRepository
+            )
         {
             _context = context;
             ClientRepository = clientRepository;
             AccountRepository = accountRepository;
             SmartTagRepository = smartTagRepository;
+            TransactionRepository = transactionRepository;
         }
 
         private bool _disposed;
