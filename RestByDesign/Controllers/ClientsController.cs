@@ -1,4 +1,5 @@
-﻿using PersonalBanking.Domain.Model;
+﻿using System.Web.Http.Cors;
+using PersonalBanking.Domain.Model;
 using RestByDesign.Controllers.Base;
 using RestByDesign.Infrastructure.DataAccess;
 using RestByDesign.Infrastructure.Extensions;
@@ -10,6 +11,7 @@ using System.Web.Http;
 
 namespace RestByDesign.Controllers
 {
+    [EnableCors("*", "*", "*")] //Example of CORS support (http://msdn.microsoft.com/en-us/magazine/dn532203.aspx)
     public class ClientsController : BaseApiController
     {
         public ClientsController(IUnitOfWork uow) : base(uow)

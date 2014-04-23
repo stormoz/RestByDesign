@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 using RestByDesign.Infrastructure.Core;
 using RestByDesign.Models.Helpers;
@@ -9,7 +10,7 @@ namespace RestByDesign.Infrastructure.JSend
     {
         private object _data;
 
-        [JsonConverter(typeof(CamelCaseStringEnumConverter))]
+        [JsonConverter(typeof (CamelCaseStringEnumConverter))]
         public JSendStatus Status { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
@@ -27,8 +28,8 @@ namespace RestByDesign.Infrastructure.JSend
 
         protected static object PrepareData(object responseObject)
         {
-            return responseObject is IEnumerable<object> ?
-                new CollectionWrapper((IEnumerable<object>)responseObject)
+            return responseObject is IEnumerable<object>
+                ? new CollectionWrapper((IEnumerable<object>) responseObject)
                 : responseObject;
         }
     }

@@ -22,7 +22,7 @@ namespace RestByDesign
             );
 
             // Content-negotiation
-            GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
+            config.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
 
             var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().Single();
             jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -38,6 +38,9 @@ namespace RestByDesign
 
             // Jsend
             config.MessageHandlers.Add(new JSendMessageHandler());
+
+            // CORS
+            config.EnableCors();
         }
     }
 }

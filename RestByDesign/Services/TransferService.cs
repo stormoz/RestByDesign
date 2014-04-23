@@ -1,7 +1,7 @@
 using PersonalBanking.Domain.Model;
 using RestByDesign.Infrastructure.Core;
 using RestByDesign.Infrastructure.DataAccess;
-using RestByDesign.Models;
+using RestByDesign.Services.Helpers;
 
 namespace RestByDesign.Services
 {

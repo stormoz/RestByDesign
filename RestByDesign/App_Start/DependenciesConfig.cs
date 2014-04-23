@@ -11,11 +11,11 @@ namespace RestByDesign
 {
     public class DependenciesConfig
     {
-        public static void Configure()
+        public static void Configure(HttpConfiguration config)
         {
             var container = IocHelper.CreateContainer(ConfigureMappings);
             var resolver = new AutofacWebApiDependencyResolver(container);
-            GlobalConfiguration.Configuration.DependencyResolver = resolver;
+            config.DependencyResolver = resolver;
         }
 
         internal static void ConfigureMappings(ContainerBuilder builder)
