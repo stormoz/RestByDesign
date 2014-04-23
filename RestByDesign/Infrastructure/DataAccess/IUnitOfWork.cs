@@ -6,12 +6,12 @@ namespace RestByDesign.Infrastructure.DataAccess
 {
     public interface IUnitOfWork : IDisposable
     {
-        IGenericRepository<Client, string> ClientRepository { get; }
-        IGenericRepository<Account, string> AccountRepository { get; }
-        IGenericRepository<SmartTag, string> SmartTagRepository { get; }
-        IGenericRepository<Transaction, string> TransactionRepository { get; }
+        IGenericRepository<Client> ClientRepository { get; }
+        IGenericRepository<Account> AccountRepository { get; }
+        IGenericRepository<SmartTag> SmartTagRepository { get; }
+        IGenericRepository<Transaction> TransactionRepository { get; }
 
-        IGenericRepository<TEntity, TKey> GetRepository<TEntity, TKey>() where TEntity : class, IEntity<TKey>;
+        IGenericRepository<TEntity> GetRepository<TEntity>() where TEntity : class, IEntity;
         void SaveChanges();
     }
 }

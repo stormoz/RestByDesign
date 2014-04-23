@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Web.Http;
-using System.Web.Http.OData;
 using PersonalBanking.Domain.Model;
 using RestByDesign.Controllers.Base;
 using RestByDesign.Infrastructure.DataAccess;
@@ -15,7 +14,6 @@ namespace RestByDesign.Controllers
         public SmartTagsController(IUnitOfWork uow) : base(uow)
         {  }
 
-        //GET /accounts/123/smarttags
         [Route("api/accounts/{accountId}/smarttags")]
         public IHttpActionResult GetAllByAccount(string accountId, string fields = null)
         {
@@ -26,7 +24,6 @@ namespace RestByDesign.Controllers
             return Ok(clientModel.SelectFields(fields));
         }
 
-        //GET /accounts/123/smarttags/2
         [Route("api/accounts/{accountId}/smarttags/{smartTagNum}")]
         public IHttpActionResult Get(string accountId, int smartTagNum, string fields = null)
         {
@@ -41,7 +38,6 @@ namespace RestByDesign.Controllers
             return Ok(smartTagModel.SelectFields(fields));
         }
 
-        //GET /smarttags/2
         [Route("api/smarttags/{smartTagId}")]
         public IHttpActionResult Get(string smartTagId, string fields = null)
         {
@@ -55,11 +51,10 @@ namespace RestByDesign.Controllers
             return Ok(smartTagModel.SelectFields(fields));
         }
 
-        //PATCH /accounts/123/smarttags/2
         [Route("api/smarttags/{smartTagId}")]
         public IHttpActionResult Patch(string smartTagId, [FromBody]object smartTagModelDelta)
         {
-            return PatchUpdate<SmartTag, string, SmartTagModel>(smartTagId, smartTagModelDelta);
+            return PatchUpdate<SmartTag, string, SmartTagModel>(x => x.Id == smartTagId, smartTagModelDelta);
         }
 
         //Example with Delta (NB: mind case-sensivity)
@@ -70,11 +65,11 @@ namespace RestByDesign.Controllers
             return PatchUpdate<SmartTag, string, SmartTagModel>(smartTagId, smartTagModelDelta);
         }*/
 
-        //DELETE /accounts/123/smarttags/2
         [Route("api/smarttags/{smartTagId}")]
         public IHttpActionResult Delete(string smartTagId)
         {
-            UnitOfWork.SmartTagRepository.Delete(smartTagId);
+            UnitOfWork.SmartTagRepository.Delete(x => x.Id == smartTagId);
+            UnitOfWork.SaveChanges();
             return Ok();
         }
     }

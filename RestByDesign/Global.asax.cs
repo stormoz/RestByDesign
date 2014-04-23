@@ -1,9 +1,4 @@
-﻿#if (!DEBUG)
-using System.Data.Entity;
-#endif
-
-using System;
-using System.Linq;
+﻿using System.Data.Entity;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -20,7 +15,7 @@ namespace RestByDesign
             //Web Api config
             GlobalConfiguration.Configure(WebApiConfig.Register);
             
-#if (!DEBUG)
+#if (!DUMMYREPO)
             //Initialise DB
             Database.SetInitializer(new RestByDesignContextInitializer());
 #endif
@@ -32,21 +27,6 @@ namespace RestByDesign
 
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-
-            //ViewEngines.Engines.Clear();
-            //ViewEngines.Engines.Add(new RazorAreaAwareViewEngine());
-
-            //var razorViewEngine = ((VirtualPathProviderViewEngine) ViewEngines.Engines[1]);
-            //var newViewSearchPaths = razorViewEngine.AreaViewLocationFormats.ToList();
-            //newViewSearchPaths.AddRange(
-            //    new[]
-            //    {
-            //        "~/Areas/{2}/Views/{1}/{0}.cshtml",
-            //        "~/Areas/{2}/Views/Shared/{0}.cshtml"
-            //    });
-
-            //razorViewEngine.AreaViewLocationFormats = newViewSearchPaths.ToArray();
-
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
     }

@@ -3,7 +3,7 @@ using PersonalBanking.Domain.Model.Core;
 
 namespace PersonalBanking.Domain.Model
 {
-    public class SmartTag : IEntity<string>
+    public class SmartTag : IEntity
     {
         public int Version { get; set; }
 

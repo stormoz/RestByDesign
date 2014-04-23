@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using PersonalBanking.Domain.Model.Core;
@@ -8,9 +7,9 @@ using RestByDesign.Models.Helpers;
 
 namespace RestByDesign.Infrastructure.DataAccess
 {
-    public class DummyGenericRepository<TEntity, TKey> : IGenericRepository<TEntity, TKey> where TEntity : class, IEntity<TKey>
+    public class DummyGenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class, IEntity
     {
-        private List<TEntity> list;
+        private readonly List<TEntity> list;
 
         public DummyGenericRepository(List<TEntity> dymmyData)
         {
@@ -23,7 +22,7 @@ namespace RestByDesign.Infrastructure.DataAccess
             PagingInfo pagingInfo = null,
             string includeProperties = "")
         {
-            IQueryable<TEntity> query = list.AsQueryable();
+            var query = list.AsQueryable();
 
             if (filter != null)
                 query = query.Where(filter);
@@ -35,10 +34,10 @@ namespace RestByDesign.Infrastructure.DataAccess
         }
 
         public virtual TEntity GetById(
-            TKey id,
+            Expression<Func<TEntity, bool>> filter,
             string includeProperties = "")
         {
-            return list.FirstOrDefault(item => item.Id.Equals(id));
+            return list.SingleOrDefault(filter.Compile());
         }
 
         public virtual void Insert(TEntity entity)
@@ -46,9 +45,9 @@ namespace RestByDesign.Infrastructure.DataAccess
             list.Add(entity);
         }
 
-        public virtual void Delete(TKey id)
+        public virtual void Delete(Expression<Func<TEntity, bool>> filter)
         {
-            TEntity entityToDelete = list.Single(item => item.Id.Equals(id));
+            TEntity entityToDelete = list.Single(filter.Compile());
             list.Remove(entityToDelete);
         }
 
@@ -59,7 +58,7 @@ namespace RestByDesign.Infrastructure.DataAccess
 
         public virtual void Update(TEntity entityToUpdate)
         {
-            Delete(entityToUpdate.Id);
+            Delete(entityToUpdate);
             Insert(entityToUpdate);
         }
     }

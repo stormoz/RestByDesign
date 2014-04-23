@@ -1,7 +1,9 @@
 ﻿using Autofac;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PersonalBanking.Domain.Model;
+using RestByDesign.Infrastructure.Core;
 using RestByDesign.Infrastructure.DataAccess;
+using RestByDesign.Services;
 using Shouldly;
 
 namespace RestByDesign.Tests
@@ -19,13 +21,18 @@ namespace RestByDesign.Tests
         [TestMethod]
         public void TestIocConfiguration()
         {
-#if DEBUG
+            ShouldBeAbleToResolve<ITransferService, TransferService>();
+#if (DUMMYREPO)
             ShouldBeAbleToResolve<IUnitOfWork, DummyUnitOfWork>();
-            ShouldBeAbleToResolve<IGenericRepository<Client, string>, DummyGenericRepository<Client, string>>();
+            ShouldBeAbleToResolve<IGenericRepository<Client>, DummyGenericRepository<Client>>();
+            ShouldBeAbleToResolve<IGenericRepository<Account>, DummyGenericRepository<Account>>();
+            ShouldBeAbleToResolve<IGenericRepository<SmartTag>, DummyGenericRepository<SmartTag>>();
+            ShouldBeAbleToResolve<IGenericRepository<Transaction>, DummyGenericRepository<Transaction>>();
 #else
-            ShouldBeAbleToResolve<IUnitOfWork, EntityFrameworkUnitOfWork>();
-            ShouldBeAbleToResolve<RestByDesignContext, RestByDesignContext>();
-            ShouldBeAbleToResolve<IGenericRepository<Client, string>, ClientRepository>();
+            ShouldBeAbleToResolve<IGenericRepository<Client>, EfGenericRepository<Client>>();
+            ShouldBeAbleToResolve<IGenericRepository<Account>, EfGenericRepository<Account>>();
+            ShouldBeAbleToResolve<IGenericRepository<SmartTag>, EfGenericRepository<SmartTag>>();
+            ShouldBeAbleToResolve<IGenericRepository<Transaction>, EfGenericRepository<Transaction>>();
 #endif
         }
 

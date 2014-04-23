@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
 using System.Web.Http;
 using PersonalBanking.Domain.Model;
@@ -8,7 +7,6 @@ using RestByDesign.Infrastructure.DataAccess;
 using RestByDesign.Infrastructure.Extensions;
 using RestByDesign.Infrastructure.Mappers;
 using RestByDesign.Models;
-using RestByDesign.Models.Helpers;
 
 namespace RestByDesign.Controllers
 {
@@ -17,7 +15,6 @@ namespace RestByDesign.Controllers
         public AccountsController(IUnitOfWork uow) : base(uow)
         {  }
 
-        //GET /clients/123/accounts
         [Route("api/clients/{clientId}/accounts")]
         public IHttpActionResult GetByClientId(string clientId, string fields = null)
         {
@@ -28,7 +25,6 @@ namespace RestByDesign.Controllers
             return Ok(accountModel.SelectFields(fields));
         }
 
-        //GET /clients/123/accounts/2
         [Route("api/clients/{clientId}/accounts/{accountNum}")]
         public IHttpActionResult Get(string clientId, int accountNum, string fields = null)
         {
@@ -43,7 +39,6 @@ namespace RestByDesign.Controllers
             return Ok(accountModel.SelectFields(fields));
         }
 
-        //GET /accounts/123456
         [Route("api/accounts/{accountId}")]
         public IHttpActionResult GetById(string accountId, string fields = null)
         {

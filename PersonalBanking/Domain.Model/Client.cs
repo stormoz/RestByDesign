@@ -1,25 +1,21 @@
-﻿using System.Collections.Generic;
-using PersonalBanking.Domain.Model.Core;
+﻿using PersonalBanking.Domain.Model.Core;
 
 namespace PersonalBanking.Domain.Model
 {
-    public class Client : IEntity<string>
+    public class Client : IEntity
     {
         public Client()
         {
             
         }
 
-        public Client(string id, string name, IList<Account> accounts)
+        public Client(string id, string name)
         {
             Id = id;
             Name = name;
-            Accounts = accounts;
         }
 
         public string Id { get; set; }
         public string Name { get; set; }
-        public IList<Account> Accounts { get; set; }
-        public string Id_Name { get { return Id + Name; } }
     }
 }

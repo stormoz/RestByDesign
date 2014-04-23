@@ -82,14 +82,8 @@ namespace RestByDesign
         {
             return new[]
             {
-                new Account
-                {
-                    Id = "111",
-                    Balance = 1900,
-                    Closed = false,
-                    Name = "Savings",
-                    ClientId = "1"
-                }
+                new Account("111","Savings",10000,false,"1"),
+                new Account("222","Cheque",100,false,"1")
             }.ToList();
         }
 
@@ -112,20 +106,8 @@ namespace RestByDesign
         {
             return new[]
             {
-                new Transaction
-                {
-                    Id = "1",
-                    Amount = 2000,
-                    EffectDate = new DateTime(2014, 3, 20),
-                    AccountId = "111"
-                },
-                new Transaction
-                {
-                    Id = "2",
-                    Amount = -100,
-                    EffectDate = new DateTime(2014, 3, 21),
-                    AccountId = "111"
-                }
+                new Transaction("1",2000,new DateTime(2014, 3, 20),"111"),
+                new Transaction("2",-100,new DateTime(2014, 3, 21),"111")
             }.ToList();
         }
     }

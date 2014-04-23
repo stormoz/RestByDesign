@@ -1,19 +1,41 @@
-﻿using System;
+﻿using System.Linq;
+using System.Net;
 using System.Web.Http;
+using PersonalBanking.Domain.Model;
+using RestByDesign.Controllers.Base;
+using RestByDesign.Infrastructure.DataAccess;
+using RestByDesign.Infrastructure.Extensions;
+using RestByDesign.Infrastructure.Mappers;
 using RestByDesign.Models;
+using RestByDesign.Services;
 
 namespace RestByDesign.Controllers
 {
-    public class TransfersController : ApiController
+    public class TransfersController : BaseApiController
     {
-        //POST /clients/123/transfers
+        private readonly ITransferService _transferService;
+
+        public TransfersController(IUnitOfWork uow, ITransferService transferService) : base(uow)
+        {
+            _transferService = transferService;
+        }
+
         [Route("api/clients/{clientId}/transfers")]
-        public IHttpActionResult Post(string clientId, [FromBody]TransferModel transfer)
+        public IHttpActionResult Post(string clientId, [FromBody]TransferModel transferModel)
         {
             if(!ModelState.IsValid)
-                throw new Exception("");
+                return Fail("Model state is invalid", data: new { errors = ModelState.Errors() });
 
-           throw new NotImplementedException();
+            var transfer = ModelMapper.Map<TransferModel, Transfer>(transferModel);
+
+            var transferResult = _transferService.MakeTransfer(transfer);
+
+            if (!transferResult.Errors.Any())
+            {
+                return StatusCode(HttpStatusCode.Created);
+            }
+
+            return Fail("Could not make a transfer", data: transferResult.Errors);
         }
     }
 }

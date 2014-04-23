@@ -15,10 +15,9 @@ namespace RestByDesign.Controllers
         public ClientsController(IUnitOfWork uow) : base(uow)
         {  }
 
-        //GET /clients/123
         public IHttpActionResult GetById(string id, string fields = null)
         {
-            var client = UnitOfWork.ClientRepository.GetById(id);
+            var client = UnitOfWork.ClientRepository.GetById(x=>x.Id == id);
 
             if (client == null)
                 return NotFound();
@@ -28,13 +27,11 @@ namespace RestByDesign.Controllers
             return Ok(clientModel.SelectFields(fields));
         }
 
-        //GET /clients
         public IHttpActionResult Get([FromUri]PagingInfo pagingInfo, string fields = null)
         {
             var clients = UnitOfWork.ClientRepository.Get(pagingInfo:pagingInfo);
             var clientsModel = ModelMapper.Map<Client, ClientModel>(clients);
 
-            //var data = new CollectionWrapper(clientsModel.SelectFields(fields), pagingInfo);
             return Ok(clientsModel.SelectFields(fields));
         }
 

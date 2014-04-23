@@ -5,7 +5,7 @@ using NUnit.Framework;
 using PersonalBanking.Domain.Model;
 using RestByDesign.Controllers;
 using RestByDesign.Infrastructure.DataAccess;
-using RestByDesign.Models;
+using RestByDesign.Tests.TestHelpers;
 using Shouldly;
 using System.Net.Http;
 using System.Web.Http;
@@ -14,15 +14,16 @@ namespace RestByDesign.Tests.Controllers
 {
     public class ClientsControllerTests
     {
-        private readonly ClientsController clientController;
-        private readonly List<Client> clients;
+        private ClientsController clientController;
+        private List<Client> clients;
 
-        public ClientsControllerTests()
+        [SetUp]
+        public void Init()
         {
-            MappingRegistration.RegisterMappings();
+            Run.Once(MappingRegistration.RegisterMappings);
 
             clients = DummyDataHelper.GetClients();
-            var clientRepo = new DummyGenericRepository<Client, string>(clients);
+            var clientRepo = new DummyGenericRepository<Client>(clients);
 
             var uow = Substitute.For<IUnitOfWork>();
             uow.ClientRepository.Returns(clientRepo);

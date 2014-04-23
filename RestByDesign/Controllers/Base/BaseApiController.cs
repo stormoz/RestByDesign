@@ -1,7 +1,10 @@
+using System;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.OData;
+using System.Web.UI.WebControls;
 using PersonalBanking.Domain.Model.Core;
 using RestByDesign.Infrastructure.DataAccess;
 using RestByDesign.Infrastructure.Extensions;
@@ -43,12 +46,12 @@ namespace RestByDesign.Controllers.Base
         /// <param name="id">Entity Id</param>
         /// <param name="entityDelta">Entity model delta</param>
         /// <returns>IHttpActionResult</returns>
-        protected IHttpActionResult PatchUpdate<TEntity, TKey, TEntityModel>(TKey id, object entityDelta)
-            where TEntity : class, IEntity<TKey>
+        protected IHttpActionResult PatchUpdate<TEntity, TKey, TEntityModel>(Expression<Func<TEntity, bool>> filter, object entityDelta)
+            where TEntity : class, IEntity
             where TEntityModel : BaseModel
         {
-            var entityRepo = UnitOfWork.GetRepository<TEntity, TKey>();
-            var item = entityRepo.Get(x => x.Id.Equals(id)).SingleOrDefault();
+            var entityRepo = UnitOfWork.GetRepository<TEntity>();
+            var item = entityRepo.Get(filter).SingleOrDefault();
 
             if (item == null)
                 return NotFound();
@@ -59,11 +62,12 @@ namespace RestByDesign.Controllers.Base
             Validate(itemModel);
 
             if (!ModelState.IsValid)
-                return Fail("Model state is invalid", data: new {items = ModelState.Errors()});
+                return Fail("Model state is invalid", data: new { errors = ModelState.Errors()});
 
             ModelMapper.Map(itemModel, item);
 
             entityRepo.Update(item);
+            UnitOfWork.SaveChanges();
             return Ok(itemModel);
         }
 

@@ -8,7 +8,6 @@ using RestByDesign.Infrastructure.DataAccess;
 using RestByDesign.Infrastructure.Extensions;
 using RestByDesign.Infrastructure.Mappers;
 using RestByDesign.Models;
-using RestByDesign.Models.Enums;
 using RestByDesign.Models.Helpers;
 
 namespace RestByDesign.Controllers
@@ -19,10 +18,6 @@ namespace RestByDesign.Controllers
         {
         }
 
-        //GET /accounts/123/transactions
-        //GET /accounts/123/transactions?fields=name,number,balance
-        //GET /accounts/123/transactions?skip=10&take=10
-        //GET /accounts/123/transactions?dateFrom=31122013&dateTo=31032014&amountFrom=5000
         [Route("api/accounts/{accountId}/transactions")]
         public IHttpActionResult Get(string accountId,
             string fields = null,
@@ -41,7 +36,7 @@ namespace RestByDesign.Controllers
         private static Expression<Func<Transaction, bool>> TransactionSearchExpression(string accountId, TransactionFilter filter)
         {
             Expression<Func<Transaction, bool>> findByAccountId = tr => tr.AccountId.Equals(accountId);
-            return findByAccountId.And(filter.GetFilterExpression());
+            return filter == null ? findByAccountId : findByAccountId.And(filter.GetFilterExpression());
         }
     }
 }

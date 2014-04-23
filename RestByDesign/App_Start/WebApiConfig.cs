@@ -21,16 +21,8 @@ namespace RestByDesign
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            /*config.Routes.MapHttpRoute(
-                "ClientAccounts",
-                "api/clients/{clientId}/accounts",
-                new { controller = "Accounts", action = "GetByClientId" }
-            );*/
-
             // Content-negotiation
-#if (DEBUG)
             GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
-#endif
 
             var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().Single();
             jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();

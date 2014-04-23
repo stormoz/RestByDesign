@@ -6,16 +6,16 @@ namespace RestByDesign.Infrastructure.DataAccess
 {
     public class DummyUnitOfWork : IUnitOfWork
     {
-        public IGenericRepository<Client, string> ClientRepository { get; private set; }
-        public IGenericRepository<Account, string> AccountRepository { get; private set; }
-        public IGenericRepository<SmartTag, string> SmartTagRepository { get; private set; }
-        public IGenericRepository<Transaction, string> TransactionRepository { get; private set; }
+        public IGenericRepository<Client> ClientRepository { get; private set; }
+        public IGenericRepository<Account> AccountRepository { get; private set; }
+        public IGenericRepository<SmartTag> SmartTagRepository { get; private set; }
+        public IGenericRepository<Transaction> TransactionRepository { get; private set; }
 
         public DummyUnitOfWork(
-            IGenericRepository<Client, string> clientRepository,
-            IGenericRepository<Account, string> accountRepository,
-            IGenericRepository<SmartTag, string> smartTagRepository,
-            IGenericRepository<Transaction, string> transactionRepository)
+            IGenericRepository<Client> clientRepository,
+            IGenericRepository<Account> accountRepository,
+            IGenericRepository<SmartTag> smartTagRepository,
+            IGenericRepository<Transaction> transactionRepository)
         {
             ClientRepository = clientRepository;
             AccountRepository = accountRepository;
@@ -23,19 +23,19 @@ namespace RestByDesign.Infrastructure.DataAccess
             TransactionRepository = transactionRepository;
         }
 
-        public IGenericRepository<TEntity, TKey> GetRepository<TEntity, TKey>() where TEntity : class, IEntity<TKey>
+        public IGenericRepository<TEntity> GetRepository<TEntity>() where TEntity : class, IEntity
         {
             if (typeof (TEntity) == typeof (Client))
-                return ClientRepository as IGenericRepository<TEntity, TKey>;
+                return ClientRepository as IGenericRepository<TEntity>;
 
             if (typeof(TEntity) == typeof(Account))
-                return AccountRepository as IGenericRepository<TEntity, TKey>;
+                return AccountRepository as IGenericRepository<TEntity>;
 
             if (typeof(TEntity) == typeof(SmartTag))
-                return SmartTagRepository as IGenericRepository<TEntity, TKey>;
+                return SmartTagRepository as IGenericRepository<TEntity>;
 
             if (typeof(TEntity) == typeof(Transaction))
-                return TransactionRepository as IGenericRepository<TEntity, TKey>;
+                return TransactionRepository as IGenericRepository<TEntity>;
 
             throw new ArgumentOutOfRangeException(typeof (TEntity).ToString(), "No repo found for this type");
         }

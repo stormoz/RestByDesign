@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using Autofac;
 
-namespace RestByDesign
+namespace RestByDesign.Infrastructure.Core
 {
     public static class IocHelper
     {

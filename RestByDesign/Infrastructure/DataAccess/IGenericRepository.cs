@@ -8,7 +8,7 @@ using RestByDesign.Models.Helpers;
 
 namespace RestByDesign.Infrastructure.DataAccess
 {
-    public interface IGenericRepository<TEntity, TKey> where TEntity : class, IEntity<TKey>
+    public interface IGenericRepository<TEntity> where TEntity : class, IEntity
     {
         IEnumerable<TEntity> Get(
             Expression<Func<TEntity, bool>> filter = null,
@@ -16,10 +16,10 @@ namespace RestByDesign.Infrastructure.DataAccess
             PagingInfo pagingInfo = null,
             string includeProperties = "");
 
-        TEntity GetById(TKey id, string includeProperties = "");
+        TEntity GetById(Expression<Func<TEntity, bool>> filter, string includeProperties = "");
 
         void Insert(TEntity entity);
-        void Delete(TKey id);
+        void Delete(Expression<Func<TEntity, bool>> filter);
         void Delete(TEntity entityToDelete);
         void Update(TEntity entityToUpdate);
     }

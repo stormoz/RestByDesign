@@ -47,7 +47,7 @@ namespace RestByDesign.Tests.Infrastructure
             }
 
             public string Id { get; set; }
-            public Dictionary<string,string> Dict { get; set; }
+            public Dictionary<string, string> Dict { get; set; }
             public IEnumerable<TestSubClass> ListSubClasses { get; set; }
             public string PrivateSetter { get; private set; }
             public dynamic Dynamic { get; set; }

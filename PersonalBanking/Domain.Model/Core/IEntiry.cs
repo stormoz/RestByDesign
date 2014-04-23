@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace PersonalBanking.Domain.Model.Core
 {
-    public interface IEntity<IKey>
+    public interface IEntity
     {
-        IKey Id { get; set; }
+        
     }
 }
