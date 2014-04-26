@@ -1,12 +1,11 @@
 ﻿using System;
 using NUnit.Framework;
 using PersonalBanking.Domain.Model;
-using RestByDesign.Infrastructure.Core.Helpers;
 using RestByDesign.Infrastructure.Mapping;
 using RestByDesign.Models;
 using Shouldly;
 
-namespace RestByDesign.Tests
+namespace RestByDesign.Tests.UnitTests
 {
     public class MappingTests
     {

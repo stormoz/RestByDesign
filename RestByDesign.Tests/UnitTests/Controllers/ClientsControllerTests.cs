@@ -1,17 +1,16 @@
 ﻿using System.Collections.Generic;
+using System.Net.Http;
+using System.Web.Http;
 using System.Web.Http.Results;
 using NSubstitute;
 using NUnit.Framework;
 using PersonalBanking.Domain.Model;
 using RestByDesign.Controllers;
-using RestByDesign.Infrastructure.Core.Helpers;
 using RestByDesign.Infrastructure.DataAccess;
 using RestByDesign.Infrastructure.Mapping;
 using Shouldly;
-using System.Net.Http;
-using System.Web.Http;
 
-namespace RestByDesign.Tests.Controllers
+namespace RestByDesign.Tests.UnitTests.Controllers
 {
     //Example of controller unit test
     public class ClientsControllerTests

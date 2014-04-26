@@ -1,12 +1,12 @@
-﻿using NUnit.Framework;
-using RestByDesign.Infrastructure.Core.Extensions;
-using Shouldly;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using NUnit.Framework;
+using RestByDesign.Infrastructure.Core.Extensions;
+using Shouldly;
 
-namespace RestByDesign.Tests.Infrastructure
+namespace RestByDesign.Tests.UnitTests.Infrastructure
 {
     public class CollectionExtensionsTests
     {

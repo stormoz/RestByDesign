@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
 using PersonalBanking.Domain.Model;
 using RestByDesign.Infrastructure.Core.Helpers;
@@ -7,14 +6,13 @@ using RestByDesign.Infrastructure.DataAccess;
 using RestByDesign.Services;
 using Shouldly;
 
-namespace RestByDesign.Tests
+namespace RestByDesign.Tests.UnitTests
 {
-    [TestClass]
     public class IocTests
     {
         private IContainer container;
 
-        [TestMethod]
+        [Test]
         [TestCase(true)]
         [TestCase(false)]
         public void TestIocConfiguration(bool dummyRepo)
