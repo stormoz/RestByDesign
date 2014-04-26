@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Linq;
 using System.Linq.Expressions;
 
-namespace RestByDesign.Infrastructure.Extensions
+namespace RestByDesign.Infrastructure.Core.Extensions
 {
     public static class ExpressionExtensions
     {
@@ -10,7 +9,7 @@ namespace RestByDesign.Infrastructure.Extensions
             this Expression<Func<T, bool>> expr1,
             Expression<Func<T, bool>> expr2)
         {
-            var invokedExpr = Expression.Invoke(expr2, expr1.Parameters.Cast<Expression>());
+            var invokedExpr = Expression.Invoke(expr2, expr1.Parameters);
             return Expression.Lambda<Func<T, bool>>
                   (Expression.AndAlso(expr1.Body, invokedExpr), expr1.Parameters);
         }

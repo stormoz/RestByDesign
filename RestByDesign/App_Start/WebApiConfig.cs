@@ -4,6 +4,7 @@ using System.Web.Http;
 using CacheCow.Server;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
+using RestByDesign.Infrastructure.Core;
 using RestByDesign.Infrastructure.JSend;
 
 namespace RestByDesign
@@ -41,6 +42,9 @@ namespace RestByDesign
 
             // CORS
             config.EnableCors();
+
+            // Exception handler attribute
+            config.Filters.Add(new CustomExceptionAttribute());
         }
     }
 }

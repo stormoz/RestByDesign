@@ -4,9 +4,9 @@ using System.Linq.Expressions;
 using System.Web.Http;
 using PersonalBanking.Domain.Model;
 using RestByDesign.Controllers.Base;
+using RestByDesign.Infrastructure.Core.Extensions;
 using RestByDesign.Infrastructure.DataAccess;
-using RestByDesign.Infrastructure.Extensions;
-using RestByDesign.Infrastructure.Mappers;
+using RestByDesign.Infrastructure.Mapping;
 using RestByDesign.Models;
 using RestByDesign.Models.Helpers;
 
@@ -15,8 +15,7 @@ namespace RestByDesign.Controllers
     public class TransactionsController : BaseApiController
     {
         public TransactionsController(IUnitOfWork uow) : base(uow)
-        {
-        }
+        { }
 
         [Route("api/accounts/{accountId}/transactions")]
         public IHttpActionResult Get(string accountId,
@@ -24,6 +23,9 @@ namespace RestByDesign.Controllers
             [FromUri]PagingInfo pagingInfo = null,
             [FromUri]TransactionFilter filter = null)
         {
+            if(!ModelState.IsValid)
+                return Fail("Model state is invalid", data: new { errors = ModelState.Errors() });
+
             var transactions = UnitOfWork.TransactionRepository.Get(
                 TransactionSearchExpression(accountId,filter)
                 , pagingInfo: pagingInfo).ToList();

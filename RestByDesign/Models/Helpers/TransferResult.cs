@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace RestByDesign.Services.Helpers
+namespace RestByDesign.Models.Helpers
 {
     public class TransferResult
     {

@@ -4,26 +4,28 @@ using NSubstitute;
 using NUnit.Framework;
 using PersonalBanking.Domain.Model;
 using RestByDesign.Controllers;
+using RestByDesign.Infrastructure.Core.Helpers;
 using RestByDesign.Infrastructure.DataAccess;
-using RestByDesign.Tests.TestHelpers;
+using RestByDesign.Infrastructure.Mapping;
 using Shouldly;
 using System.Net.Http;
 using System.Web.Http;
 
 namespace RestByDesign.Tests.Controllers
 {
+    //Example of controller unit test
     public class ClientsControllerTests
     {
         private ClientsController clientController;
-        private List<Client> clients;
+        private IList<Client> clients;
 
         [SetUp]
         public void Init()
         {
-            Run.Once(MappingRegistration.RegisterMappings);
+            MappingRegistration.RegisterMappings();
 
-            clients = DummyDataHelper.GetClients();
-            var clientRepo = new DummyGenericRepository<Client>(clients);
+            clients = DummyDataHelper.GetList<Client>();
+            var clientRepo = new DummyGenericRepository<Client>(DummyDataHelper.GetClients());
 
             var uow = Substitute.For<IUnitOfWork>();
             uow.ClientRepository.Returns(clientRepo);

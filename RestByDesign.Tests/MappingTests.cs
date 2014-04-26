@@ -1,9 +1,9 @@
 ﻿using System;
 using NUnit.Framework;
 using PersonalBanking.Domain.Model;
-using RestByDesign.Infrastructure.Mappers;
+using RestByDesign.Infrastructure.Core.Helpers;
+using RestByDesign.Infrastructure.Mapping;
 using RestByDesign.Models;
-using RestByDesign.Tests.TestHelpers;
 using Shouldly;
 
 namespace RestByDesign.Tests
@@ -13,7 +13,7 @@ namespace RestByDesign.Tests
         [SetUp]
         public void Init()
         {
-            Run.Once(MappingRegistration.RegisterMappings);
+            MappingRegistration.RegisterMappings();
         }
 
         [Test]
@@ -25,7 +25,7 @@ namespace RestByDesign.Tests
 
             // Map to an existing object
             var smartTagModel = new SmartTagModel {Id = "1", Active = true};
-            var smartTag = new SmartTag { Id = "1", Active = false };
+            var smartTag = new SmartTag ("1", "111", false, false, 1, new DateTime());
             AssertMappingCorrect(smartTagModel, smartTag, (fr, to) => fr.Active == to.Active);
         }
 

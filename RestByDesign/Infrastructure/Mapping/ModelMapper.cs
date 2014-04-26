@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RestByDesign.Infrastructure.Mappers
+namespace RestByDesign.Infrastructure.Mapping
 {
+    // Simple model mapper
     public static class ModelMapper
     {
         private static readonly Dictionary<KeyValuePair<Type, Type>, object> MappingsObjectToNew = new Dictionary<KeyValuePair<Type, Type>, object>();

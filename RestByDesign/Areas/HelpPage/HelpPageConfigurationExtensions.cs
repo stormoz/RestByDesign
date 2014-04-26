@@ -12,6 +12,7 @@ using System.Web.Http.Controllers;
 using System.Web.Http.Description;
 using RestByDesign.Areas.HelpPage.ModelDescriptions;
 using RestByDesign.Areas.HelpPage.Models;
+using RestByDesign.Areas.HelpPage.SampleGeneration;
 
 namespace RestByDesign.Areas.HelpPage
 {

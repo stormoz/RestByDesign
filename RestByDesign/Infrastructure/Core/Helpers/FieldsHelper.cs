@@ -6,9 +6,9 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Text.RegularExpressions;
 using System.Threading;
-using RestByDesign.Infrastructure.Extensions;
+using RestByDesign.Infrastructure.Core.Extensions;
 
-namespace RestByDesign.Models.Helpers
+namespace RestByDesign.Infrastructure.Core.Helpers
 {
     public class FieldsHelper
     {
@@ -20,8 +20,8 @@ namespace RestByDesign.Models.Helpers
 
         /// <summary>
         /// Takes a given instance, creates and caches a new type based 
-        /// on the instance's type and fields/props specified in the "fields" parameter and creates 
-        /// a new instance of the new type with values copied
+        /// on the instance's type and fields/props specified and creates 
+        /// a new instance of the new type with values copied from the original instance
         /// </summary>
         /// <typeparam name="T">T</typeparam>
         /// <param name="instance">Object to use as a base for a new instance</param>

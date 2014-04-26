@@ -1,13 +1,13 @@
+using System;
 using PersonalBanking.Domain.Model.Core;
+using PersonalBanking.Domain.Model.Exceptions;
 
 namespace PersonalBanking.Domain.Model
 {
     public class Account : IEntity
     {
-        public Account()
-        {
-            
-        }
+        protected Account()
+        { }
 
         public Account(string id, string name, decimal balance, bool closed, string clientId)
         {
@@ -26,11 +26,20 @@ namespace PersonalBanking.Domain.Model
 
         public void TakeFromAccount(decimal amount)
         {
+            if(amount <= 0)
+                throw new ArgumentException("Amount to take from account should be greater than 0");
+
+            if (amount > Balance)
+                throw new PersonalBankingException("Not enough money to take amount from account");
+
             Balance -= amount;
         }
 
         public void PutToAccount(decimal amount)
         {
+            if (amount <= 0)
+                throw new ArgumentException("Amount to take from account should be greater than 0");
+
             Balance += amount;
         }
     }

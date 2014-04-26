@@ -1,12 +1,11 @@
 ﻿using System.Web.Http.Cors;
 using PersonalBanking.Domain.Model;
 using RestByDesign.Controllers.Base;
+using RestByDesign.Infrastructure.Core.Extensions;
 using RestByDesign.Infrastructure.DataAccess;
-using RestByDesign.Infrastructure.Extensions;
-using RestByDesign.Infrastructure.Mappers;
+using RestByDesign.Infrastructure.Mapping;
 using RestByDesign.Models;
 using RestByDesign.Models.Helpers;
-using System.Net;
 using System.Web.Http;
 
 namespace RestByDesign.Controllers
@@ -19,7 +18,7 @@ namespace RestByDesign.Controllers
 
         public IHttpActionResult GetById(string id, string fields = null)
         {
-            var client = UnitOfWork.ClientRepository.GetById(x=>x.Id == id);
+            var client = UnitOfWork.ClientRepository.GetSingle(x=>x.Id == id);
 
             if (client == null)
                 return NotFound();
@@ -37,21 +36,12 @@ namespace RestByDesign.Controllers
             return Ok(clientsModel.SelectFields(fields));
         }
 
-        [HttpPost]
-        [HttpPut]
-        [HttpPatch]
-        [HttpDelete]
-        public IHttpActionResult NotAllowed(string id = null)
-        {
-            throw new HttpResponseException(HttpStatusCode.MethodNotAllowed);  
-        }
-
         //OData example
         /*
         [Queryable]
         public SingleResult<ClientModel> GetById(string id)
         {
-            var client = UnitOfWork.ClientRepository.GetById(id);
+            var client = UnitOfWork.ClientRepository.GetSingle(x=>x.Id == id);
             var clientModel = ModelMapper.Map<Client, ClientModel>(client);
 
             return ODataHelper.Single(clientModel);

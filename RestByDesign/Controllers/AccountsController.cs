@@ -3,9 +3,9 @@ using System.Net;
 using System.Web.Http;
 using PersonalBanking.Domain.Model;
 using RestByDesign.Controllers.Base;
+using RestByDesign.Infrastructure.Core.Extensions;
 using RestByDesign.Infrastructure.DataAccess;
-using RestByDesign.Infrastructure.Extensions;
-using RestByDesign.Infrastructure.Mappers;
+using RestByDesign.Infrastructure.Mapping;
 using RestByDesign.Models;
 
 namespace RestByDesign.Controllers
@@ -50,20 +50,6 @@ namespace RestByDesign.Controllers
             var accountModel = ModelMapper.Map<Account, AccountModel>(account);
 
             return Ok(accountModel.SelectFields(fields));
-        }
-
-        [HttpPost]
-        [HttpPut]
-        [HttpPatch]
-        [HttpDelete]
-        public IHttpActionResult NotAllowed(string id = null)
-        {
-            throw new HttpResponseException(HttpStatusCode.MethodNotAllowed);
-        }
-
-        public IHttpActionResult GetAll()
-        {
-            throw new HttpResponseException(HttpStatusCode.MethodNotAllowed);
         }
     }
 }

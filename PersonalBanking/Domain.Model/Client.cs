@@ -4,10 +4,8 @@ namespace PersonalBanking.Domain.Model
 {
     public class Client : IEntity
     {
-        public Client()
-        {
-            
-        }
+        protected Client()
+        { }
 
         public Client(string id, string name)
         {
@@ -15,7 +13,7 @@ namespace PersonalBanking.Domain.Model
             Name = name;
         }
 
-        public string Id { get; set; }
-        public string Name { get; set; }
+        public string Id { get; private set; }
+        public string Name { get; private set; }
     }
 }

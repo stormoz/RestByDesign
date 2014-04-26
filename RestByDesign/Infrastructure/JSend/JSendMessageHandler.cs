@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -53,10 +52,7 @@ namespace RestByDesign.Infrastructure.JSend
                             request.CreateResponse(responseObject);
                     }
 
-                    //var errorContent = t.Result.Content as ObjectContent<HttpError>;
-                    //if (errorContent != null || (int)t.Result.StatusCode >= 400)
-
-                    if ((int)t.Result.StatusCode >= 400)
+                    if ((int)t.Result.StatusCode >= 400 || t.Result.Content is ObjectContent<HttpError>)
                     {
                         return request.CreateResponse(
                             t.Result.StatusCode,

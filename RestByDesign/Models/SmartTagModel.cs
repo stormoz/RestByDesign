@@ -1,6 +1,5 @@
-﻿
-using System.ComponentModel.DataAnnotations;
-using RestByDesign.Infrastructure.Attributes;
+﻿using System.ComponentModel.DataAnnotations;
+using RestByDesign.Infrastructure.Core;
 using RestByDesign.Models.Base;
 
 namespace RestByDesign.Models
@@ -12,6 +11,7 @@ namespace RestByDesign.Models
         //[ConcurrencyCheck]
         [NotPatchable]
         public int? Version { get; set; }
-        public bool? Active { get; set; }
+        [Required]
+        public bool? Active { get; set; } //field made nullable just to demo Validation on Patch
     }
 }

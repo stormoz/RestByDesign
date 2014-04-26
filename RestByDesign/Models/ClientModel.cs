@@ -1,4 +1,4 @@
-﻿using RestByDesign.Infrastructure.Attributes;
+﻿using RestByDesign.Infrastructure.Core;
 using RestByDesign.Models.Base;
 
 namespace RestByDesign.Models

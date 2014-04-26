@@ -1,5 +1,4 @@
-﻿
-using RestByDesign.Infrastructure.Attributes;
+﻿using RestByDesign.Infrastructure.Core;
 using RestByDesign.Models.Base;
 
 namespace RestByDesign.Models
@@ -9,6 +8,6 @@ namespace RestByDesign.Models
     {
         public string Id { get; set; }
         public string Name { get; set; }
-        public decimal Balance { get; set; }
+        public decimal? Balance { get; set; }
     }
 }

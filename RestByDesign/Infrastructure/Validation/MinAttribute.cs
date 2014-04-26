@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace RestByDesign.Infrastructure.Core
+namespace RestByDesign.Infrastructure.Validation
 {
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
     public class MinAttribute : DataTypeAttribute

@@ -43,7 +43,7 @@ namespace RestByDesign.Infrastructure.DataAccess
             return (orderBy != null ? orderBy(query) : query).ToList();
         }
 
-        public virtual TEntity GetById(
+        public virtual TEntity GetSingle(
             Expression<Func<TEntity,bool>> filter,
             string includeProperties = "")
         {
@@ -65,7 +65,7 @@ namespace RestByDesign.Infrastructure.DataAccess
 
         public virtual void Delete(Expression<Func<TEntity, bool>> filter)
         {
-            TEntity entityToDelete = DbSet.SingleOrDefault(filter);
+            var entityToDelete = DbSet.SingleOrDefault(filter);
 
             if(filter != null)
                 Delete(entityToDelete);

@@ -2,7 +2,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace RestByDesign.Infrastructure.MessageHandlers
+namespace RestByDesign.Infrastructure.Core
 {
     public class HeadHandler : DelegatingHandler
     {

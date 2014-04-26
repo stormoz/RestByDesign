@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using RestByDesign.Infrastructure.Extensions;
+using RestByDesign.Infrastructure.Core.Extensions;
 using Shouldly;
 using System;
 using System.Collections.Generic;

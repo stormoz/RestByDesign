@@ -1,10 +1,10 @@
 using PersonalBanking.Domain.Model;
-using RestByDesign.Services.Helpers;
+using RestByDesign.Models.Helpers;
 
 namespace RestByDesign.Services
 {
     public interface ITransferService
     {
-        TransferResult MakeTransfer(Transfer transfer);
+        TransferResult MakeTransfer(string clientId, Transfer transfer);
     }
 }

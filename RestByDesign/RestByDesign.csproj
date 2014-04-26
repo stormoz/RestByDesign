@@ -174,7 +174,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="App_Start\DummyDataHelper.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\DependenciesConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -210,14 +209,18 @@
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\Base\BaseApiController.cs" />
     <Compile Include="Controllers\ClientsController.cs" />
-    <Compile Include="Infrastructure\Attributes\NotPatchableAttribute.cs" />
-    <Compile Include="Infrastructure\Core\IocHelper.cs" />
-    <Compile Include="Infrastructure\Core\MinAttribute.cs" />
+    <Compile Include="Infrastructure\Core\CustomExceptionAttribute.cs" />
+    <Compile Include="Infrastructure\Core\FailResult.cs" />
+    <Compile Include="Infrastructure\Core\HeadHandler.cs" />
+    <Compile Include="Infrastructure\Core\Helpers\IocHelper.cs" />
+    <Compile Include="Infrastructure\Core\NotPatchableAttribute.cs" />
     <Compile Include="Infrastructure\Core\SystemTime.cs" />
-    <Compile Include="Infrastructure\Extensions\ExpressionExtensions.cs" />
-    <Compile Include="Infrastructure\Extensions\ModelStateExtensions.cs" />
-    <Compile Include="Infrastructure\Extensions\StringExtensions.cs" />
-    <Compile Include="Infrastructure\JSend\FailResult.cs" />
+    <Compile Include="Infrastructure\DataAccess\DummyDataHelper.cs" />
+    <Compile Include="Infrastructure\DataAccess\RestByDesignContextInitializer.cs" />
+    <Compile Include="Infrastructure\Core\Extensions\ExpressionExtensions.cs" />
+    <Compile Include="Infrastructure\Core\Extensions\ModelStateExtensions.cs" />
+    <Compile Include="Infrastructure\Core\Extensions\QueryableExtensions.cs" />
+    <Compile Include="Infrastructure\Core\Extensions\StringExtensions.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SmartTagsController.cs" />
     <Compile Include="Controllers\TransactionsController.cs" />
@@ -226,38 +229,34 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\Core\CamelCaseStringEnumConverter.cs" />
-    <Compile Include="Infrastructure\Core\WritablePropertiesOnlyResolver.cs" />
     <Compile Include="Infrastructure\DataAccess\DummyGenericRepository.cs" />
     <Compile Include="Infrastructure\DataAccess\DummyUnitOfWork.cs" />
     <Compile Include="Infrastructure\DataAccess\EntityFrameworkUnitOfWork.cs" />
     <Compile Include="Infrastructure\DataAccess\IUnitOfWork.cs" />
     <Compile Include="Infrastructure\DataAccess\EfGenericRepository.cs" />
     <Compile Include="Infrastructure\DataAccess\IGenericRepository.cs" />
-    <Compile Include="Infrastructure\Extensions\CollectionExtensions.cs" />
+    <Compile Include="Infrastructure\Core\Extensions\CollectionExtensions.cs" />
     <Compile Include="Infrastructure\JSend\SuccessJSendPayload.cs" />
-    <Compile Include="Infrastructure\MessageHandlers\HeadHandler.cs" />
+    <Compile Include="Infrastructure\Mapping\MappingRegistration.cs" />
+    <Compile Include="Infrastructure\Validation\MinAttribute.cs" />
     <Compile Include="Models\Enums\TransactionType.cs" />
     <Compile Include="Models\Helpers\CollectionWrapper.cs" />
-    <Compile Include="Models\Helpers\Fields.cs" />
     <Compile Include="Infrastructure\JSend\JSendMessageHandler.cs" />
     <Compile Include="Infrastructure\JSend\JSendPayload.cs" />
     <Compile Include="Infrastructure\JSend\JSendStatus.cs" />
-    <Compile Include="Infrastructure\Mappers\ModelMapper.cs" />
-    <Compile Include="Infrastructure\OData\ODataHelper.cs" />
-    <Compile Include="App_Start\MappingRegistration.cs" />
+    <Compile Include="Infrastructure\Mapping\ModelMapper.cs" />
     <Compile Include="Models\AccountModel.cs" />
     <Compile Include="Models\Base\BaseModel.cs" />
     <Compile Include="Models\ClientModel.cs" />
-    <Compile Include="Models\Helpers\FieldsHelper.cs" />
+    <Compile Include="Infrastructure\Core\Helpers\FieldsHelper.cs" />
     <Compile Include="Models\Helpers\PagingInfo.cs" />
     <Compile Include="Infrastructure\DataAccess\RestByDesignContext.cs" />
-    <Compile Include="App_Start\RestByDesignContextInitializer.cs" />
     <Compile Include="Models\SmartTagModel.cs" />
     <Compile Include="Models\Helpers\TransactionFilter.cs" />
     <Compile Include="Models\TransactionModel.cs" />
     <Compile Include="Models\TransferModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\Helpers\TransferResult.cs" />
+    <Compile Include="Models\Helpers\TransferResult.cs" />
     <Compile Include="Services\ITransferService.cs" />
     <Compile Include="Services\TransferService.cs" />
   </ItemGroup>

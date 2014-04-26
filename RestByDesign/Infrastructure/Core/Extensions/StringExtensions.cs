@@ -1,4 +1,6 @@
-﻿namespace RestByDesign.Infrastructure.Extensions
+﻿using System;
+
+namespace RestByDesign.Infrastructure.Core.Extensions
 {
     public static class StringExtensions
     {
@@ -10,6 +12,12 @@
         public static string ToLowerFirstLetter(this string source)
         {
             return ConvertFirstLetter(source);
+        }
+
+        /// Equals ignore case
+        public static bool EqualsIc(this string source, string value)
+        {
+            return source.Equals(value, StringComparison.InvariantCultureIgnoreCase);
         }
 
         private static string ConvertFirstLetter(this string source, bool lower = true)

@@ -4,8 +4,8 @@ namespace RestByDesign.Infrastructure.Core
 {
     public static class SystemTime
     {
-        private static readonly Func<DateTime> defaultNowStrategy = () => DateTime.Now;
-        private static Lazy<Func<DateTime>> _nowStrategy = new Lazy<Func<DateTime>>(() => defaultNowStrategy);
+        private static readonly Func<DateTime> _defaultNowStrategy = () => DateTime.Now;
+        private static Lazy<Func<DateTime>> _nowStrategy = new Lazy<Func<DateTime>>(() => _defaultNowStrategy);
 
         public static DateTime Now 
         {
@@ -25,7 +25,7 @@ namespace RestByDesign.Infrastructure.Core
 
         public static void ResetDateTime()
         {
-            _nowStrategy = new Lazy<Func<DateTime>>(() => defaultNowStrategy);
+            _nowStrategy = new Lazy<Func<DateTime>>(() => _defaultNowStrategy);
         }
     }
 }

@@ -1,7 +1,10 @@
-﻿using System.Web.Http;
+﻿using System.Data.Entity;
+using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using RestByDesign.Infrastructure.DataAccess;
+using RestByDesign.Infrastructure.Mapping;
 
 namespace RestByDesign
 {
@@ -10,29 +13,30 @@ namespace RestByDesign
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
-            
-            GlobalConfiguration.Configure(ConfigRegisterRestByDesignApp);
+
+            GlobalConfiguration.Configure(config => ConfigRegisterRestByDesignApp(config));
 
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
 
-        internal static void ConfigRegisterRestByDesignApp(HttpConfiguration config)
+        internal static void ConfigRegisterRestByDesignApp(HttpConfiguration config, bool dummyRepo = false)
         {
             //Web Api config
             WebApiConfig.Register(config);
 
             //Configure DI
-            DependenciesConfig.Configure(config);
+            DependenciesConfig.Configure(config, dummyRepo:dummyRepo);
 
             //Configure mappings
             MappingRegistration.RegisterMappings();
 
-#if (!DUMMYREPO)
-            //Initialise DB
-            Database.SetInitializer(new RestByDesignContextInitializer());
-#endif
+            if (!dummyRepo)
+            {
+                //Initialise DB
+                Database.SetInitializer(new RestByDesignContextInitializer());
+            }
         }
     }
 }

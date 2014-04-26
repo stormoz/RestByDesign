@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Web.Http.ModelBinding;
 
-namespace RestByDesign.Infrastructure.Extensions
+namespace RestByDesign.Infrastructure.Core.Extensions
 {
     public static class ModelStateExtensions
     {

@@ -9,9 +9,9 @@ namespace RestByDesign.Infrastructure.DataAccess
 {
     public class DummyGenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class, IEntity
     {
-        private readonly List<TEntity> list;
+        private readonly IList<TEntity> list;
 
-        public DummyGenericRepository(List<TEntity> dymmyData)
+        public DummyGenericRepository(IList<TEntity> dymmyData)
         {
             list = dymmyData;
         }
@@ -33,7 +33,7 @@ namespace RestByDesign.Infrastructure.DataAccess
             return (orderBy != null ? orderBy(query) : query).ToList();
         }
 
-        public virtual TEntity GetById(
+        public virtual TEntity GetSingle(
             Expression<Func<TEntity, bool>> filter,
             string includeProperties = "")
         {

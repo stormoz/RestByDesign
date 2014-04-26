@@ -37,6 +37,8 @@
     <Compile Include="Domain.Model\Account.cs" />
     <Compile Include="Domain.Model\Client.cs" />
     <Compile Include="Domain.Model\Core\IEntiry.cs" />
+    <Compile Include="Domain.Model\Core\IValueObject.cs" />
+    <Compile Include="Domain.Model\Exceptions\PersonalBankingException.cs" />
     <Compile Include="Domain.Model\SmartTag.cs" />
     <Compile Include="Domain.Model\Transaction.cs" />
     <Compile Include="Domain.Model\Transfer.cs" />

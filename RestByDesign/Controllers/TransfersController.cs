@@ -3,9 +3,9 @@ using System.Net;
 using System.Web.Http;
 using PersonalBanking.Domain.Model;
 using RestByDesign.Controllers.Base;
+using RestByDesign.Infrastructure.Core.Extensions;
 using RestByDesign.Infrastructure.DataAccess;
-using RestByDesign.Infrastructure.Extensions;
-using RestByDesign.Infrastructure.Mappers;
+using RestByDesign.Infrastructure.Mapping;
 using RestByDesign.Models;
 using RestByDesign.Services;
 
@@ -28,7 +28,7 @@ namespace RestByDesign.Controllers
 
             var transfer = ModelMapper.Map<TransferModel, Transfer>(transferModel);
 
-            var transferResult = _transferService.MakeTransfer(transfer);
+            var transferResult = _transferService.MakeTransfer(clientId, transfer);
 
             if (!transferResult.Errors.Any())
             {

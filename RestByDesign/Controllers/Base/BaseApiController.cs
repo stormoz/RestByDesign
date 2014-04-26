@@ -3,14 +3,18 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
 using System.Web.Http;
+using PersonalBanking.Domain.Model.Core;
+using RestByDesign.Infrastructure.Core;
+using RestByDesign.Infrastructure.Core.Extensions;
+using RestByDesign.Infrastructure.DataAccess;
+using RestByDesign.Infrastructure.JSend;
+using RestByDesign.Infrastructure.Mapping;
+using RestByDesign.Models.Base;
+
+#if ODATA
 using System.Web.Http.OData;
 using System.Web.UI.WebControls;
-using PersonalBanking.Domain.Model.Core;
-using RestByDesign.Infrastructure.DataAccess;
-using RestByDesign.Infrastructure.Extensions;
-using RestByDesign.Infrastructure.JSend;
-using RestByDesign.Infrastructure.Mappers;
-using RestByDesign.Models.Base;
+#endif
 
 namespace RestByDesign.Controllers.Base
 {
@@ -37,16 +41,16 @@ namespace RestByDesign.Controllers.Base
             return new FailResult(httpCode, message, data, this);
         }
 
+#if !ODATA
         /// <summary>
-        /// Update an entity from Delta
+        /// Partial update an entity from object 
         /// </summary>
         /// <typeparam name="TEntity">Type of Entity</typeparam>
-        /// <typeparam name="TKey">Type of entity primary key</typeparam>
         /// <typeparam name="TEntityModel">Type of entity model</typeparam>
-        /// <param name="id">Entity Id</param>
+        /// <param name="filter">Filter expression to find a single item</param>
         /// <param name="entityDelta">Entity model delta</param>
         /// <returns>IHttpActionResult</returns>
-        protected IHttpActionResult PatchUpdate<TEntity, TKey, TEntityModel>(Expression<Func<TEntity, bool>> filter, object entityDelta)
+        protected IHttpActionResult PatchUpdate<TEntity, TEntityModel>(Expression<Func<TEntity, bool>> filter, object entityDelta)
             where TEntity : class, IEntity
             where TEntityModel : BaseModel
         {
@@ -70,18 +74,18 @@ namespace RestByDesign.Controllers.Base
             UnitOfWork.SaveChanges();
             return Ok(itemModel);
         }
-
+#else
         //Example with Delta (NB: Property binding for Delta is case-sensitive)
-        /*protected IHttpActionResult PatchUpdate<TEntity, TKey, TEntityModel>(TKey id, Delta<TEntityModel> entityDelta)
-            where TEntity : class, IEntity<TKey>
+        protected IHttpActionResult PatchUpdate<TEntity, TEntityModel>(Expression<Func<TEntity, bool>> filter, Delta<TEntityModel> entityDelta)
+            where TEntity : class, IEntity
             where TEntityModel : class
         {
             var changedProperties = entityDelta.GetChangedPropertyNames();
             if (!changedProperties.Any())
                 return Fail("Nothing to update", HttpStatusCode.NotModified);
 
-            var entityRepo = UnitOfWork.GetRepository<TEntity, TKey>();
-            var item = entityRepo.Get(x => x.Id.Equals(id)).SingleOrDefault();
+            var entityRepo = UnitOfWork.GetRepository<TEntity>();
+            var item = entityRepo.Get(filter).SingleOrDefault();
 
             if (item == null)
                 return NotFound();
@@ -98,6 +102,7 @@ namespace RestByDesign.Controllers.Base
 
             entityRepo.Update(item);
             return Ok(itemModel);
-        }*/
+        }
+#endif
     }
 }

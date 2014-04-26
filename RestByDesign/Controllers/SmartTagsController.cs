@@ -2,10 +2,14 @@
 using System.Web.Http;
 using PersonalBanking.Domain.Model;
 using RestByDesign.Controllers.Base;
+using RestByDesign.Infrastructure.Core.Extensions;
 using RestByDesign.Infrastructure.DataAccess;
-using RestByDesign.Infrastructure.Extensions;
-using RestByDesign.Infrastructure.Mappers;
+using RestByDesign.Infrastructure.Mapping;
 using RestByDesign.Models;
+
+#if ODATA
+using System.Web.Http.OData;
+#endif
 
 namespace RestByDesign.Controllers
 {
@@ -54,16 +58,18 @@ namespace RestByDesign.Controllers
         [Route("api/smarttags/{smartTagId}")]
         public IHttpActionResult Patch(string smartTagId, [FromBody]object smartTagModelDelta)
         {
-            return PatchUpdate<SmartTag, string, SmartTagModel>(x => x.Id == smartTagId, smartTagModelDelta);
+            return PatchUpdate<SmartTag, SmartTagModel>(x => x.Id == smartTagId, smartTagModelDelta);
         }
 
-        //Example with Delta (NB: mind case-sensivity)
-        /*[HttpPatch]
+#if ODATA
+        //Example with Delta (NB: mind case-sensivity of properties)
+        [HttpPatch]
         [Route("api/smarttags/{smartTagId}")]
         public IHttpActionResult Patch(string smartTagId, [FromBody]Delta<SmartTagModel> smartTagModelDelta)
         {
-            return PatchUpdate<SmartTag, string, SmartTagModel>(smartTagId, smartTagModelDelta);
-        }*/
+            return PatchUpdate<SmartTag, string, SmartTagModel>(x => x.Id == smartTagId, smartTagModelDelta);
+        }
+#endif
 
         [Route("api/smarttags/{smartTagId}")]
         public IHttpActionResult Delete(string smartTagId)

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using PersonalBanking.Domain.Model.Core;
-using RestByDesign.Models;
 using RestByDesign.Models.Helpers;
 
 namespace RestByDesign.Infrastructure.DataAccess
@@ -16,7 +15,7 @@ namespace RestByDesign.Infrastructure.DataAccess
             PagingInfo pagingInfo = null,
             string includeProperties = "");
 
-        TEntity GetById(Expression<Func<TEntity, bool>> filter, string includeProperties = "");
+        TEntity GetSingle(Expression<Func<TEntity, bool>> filter, string includeProperties = "");
 
         void Insert(TEntity entity);
         void Delete(Expression<Func<TEntity, bool>> filter);

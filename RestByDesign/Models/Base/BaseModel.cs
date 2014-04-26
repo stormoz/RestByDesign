@@ -2,13 +2,17 @@
 using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json.Linq;
-using RestByDesign.Infrastructure.Attributes;
-using RestByDesign.Infrastructure.Extensions;
+using RestByDesign.Infrastructure.Core;
+using RestByDesign.Infrastructure.Core.Extensions;
 
 namespace RestByDesign.Models.Base
 {
     public class BaseModel
     {
+        /// <summary>
+        /// Example of a simple patch implementation
+        /// </summary>
+        /// <param name="u">Object</param>
         public void PatchFrom(Object u)
         {
             if (u == null)
@@ -35,26 +39,6 @@ namespace RestByDesign.Models.Base
                 var type = prop.PropertyType;
 
                 prop.SetValue(this, Convert.ChangeType(token, type));
-            }
-        }
-
-        public void Patch(BaseModel u)
-        {
-            var nonPatchableAttr = typeof (NotPatchableAttribute);
-
-            if (GetType().GetCustomAttributes(nonPatchableAttr).Any())
-                return;
-
-            var props = from p in GetType().GetProperties()
-                        let attr = p.GetCustomAttribute(nonPatchableAttr)
-                        where attr == null
-                        select p;
-
-            foreach (var prop in props)
-            {
-                var val = prop.GetValue(this, null);
-                if (val != null)
-                    prop.SetValue(u, val);
             }
         }
     }

@@ -3,8 +3,9 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
+using RestByDesign.Infrastructure.JSend;
 
-namespace RestByDesign.Infrastructure.JSend
+namespace RestByDesign.Infrastructure.Core
 {
     public class FailResult : IHttpActionResult
     {
