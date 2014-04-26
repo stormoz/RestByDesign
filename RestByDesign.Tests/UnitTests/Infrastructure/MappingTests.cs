@@ -5,7 +5,7 @@ using RestByDesign.Infrastructure.Mapping;
 using RestByDesign.Models;
 using Shouldly;
 
-namespace RestByDesign.Tests.UnitTests
+namespace RestByDesign.Tests.UnitTests.Infrastructure
 {
     public class MappingTests
     {

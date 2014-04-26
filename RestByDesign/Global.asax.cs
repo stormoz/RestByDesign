@@ -14,20 +14,20 @@ namespace RestByDesign
         {
             AreaRegistration.RegisterAllAreas();
 
-            GlobalConfiguration.Configure(config => ConfigRegisterRestByDesignApp(config));
+            GlobalConfiguration.Configure(config => ConfigRestByDesignApp(config));
 
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
 
-        internal static void ConfigRegisterRestByDesignApp(HttpConfiguration config, bool dummyRepo = false)
+        internal static void ConfigRestByDesignApp(HttpConfiguration config, bool dummyRepo = false)
         {
             //Web Api config
             WebApiConfig.Register(config);
 
             //Configure DI
-            DependenciesConfig.Configure(config, dummyRepo:dummyRepo);
+            DependenciesConfig.Configure(config, dummyRepo);
 
             //Configure mappings
             MappingRegistration.RegisterMappings();

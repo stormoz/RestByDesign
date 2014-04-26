@@ -7,7 +7,7 @@ using RestByDesign.Tests.IntegrationTests.Helpers;
 using Shouldly;
 using TechTalk.SpecFlow;
 
-namespace RestByDesign.Tests.BDD
+namespace RestByDesign.Tests.BDD.Steps
 {
     [Binding]
     public class TransactionHistorySteps

@@ -6,7 +6,7 @@ using RestByDesign.Infrastructure.DataAccess;
 using RestByDesign.Services;
 using Shouldly;
 
-namespace RestByDesign.Tests.UnitTests
+namespace RestByDesign.Tests.UnitTests.Infrastructure
 {
     public class IocTests
     {
@@ -22,7 +22,6 @@ namespace RestByDesign.Tests.UnitTests
             ShouldBeAbleToResolve<ITransferService, TransferService>();
             if (dummyRepo)
             {
-
                 ShouldBeAbleToResolve<IUnitOfWork, DummyUnitOfWork>();
                 ShouldBeAbleToResolve<IGenericRepository<Client>, DummyGenericRepository<Client>>();
                 ShouldBeAbleToResolve<IGenericRepository<Account>, DummyGenericRepository<Account>>();

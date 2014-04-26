@@ -12,7 +12,7 @@ namespace RestByDesign.Tests.IntegrationTests.Core
             GlobalConfiguration = new HttpConfiguration();
 
             // register routes, IoC, mappings, DAL
-            WebApiApplication.ConfigRegisterRestByDesignApp(GlobalConfiguration, dummyRepo: true);
+            WebApiApplication.ConfigRestByDesignApp(GlobalConfiguration, dummyRepo: true);
 
             appBuilder.UseWebApi(GlobalConfiguration);
         }

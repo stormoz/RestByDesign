@@ -158,15 +158,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TransactionHistory.feature</DependentUpon>
     </Compile>
-    <Compile Include="BDD\TransactionHistorySteps.cs" />
+    <Compile Include="BDD\Steps\TransactionHistorySteps.cs" />
+    <Compile Include="IntegrationTests\AccountsControllerTests.cs" />
+    <Compile Include="IntegrationTests\Base\OwinIntegrationTest.cs" />
+    <Compile Include="IntegrationTests\SmartTagsControllerTests.cs" />
+    <Compile Include="IntegrationTests\TransactionsControllerTests.cs" />
+    <Compile Include="IntegrationTests\TransfersControllerTests.cs" />
     <Compile Include="UnitTests\Controllers\ClientsControllerTests.cs" />
     <Compile Include="UnitTests\Infrastructure\CollectionExtensionsTests.cs" />
     <Compile Include="IntegrationTests\Helpers\IntegrationTestsExtensions.cs" />
     <Compile Include="IntegrationTests\Core\Startup.cs" />
-    <Compile Include="IntegrationTests\ApiControllerTests.cs" />
-    <Compile Include="UnitTests\MappingTests.cs" />
+    <Compile Include="IntegrationTests\ClientsControllerTests.cs" />
+    <Compile Include="UnitTests\Infrastructure\MappingTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UnitTests\IocTests.cs" />
+    <Compile Include="UnitTests\Infrastructure\IocTests.cs" />
     <Compile Include="IntegrationTests\Helpers\CollectionWrapperTestHelper.cs" />
     <Compile Include="IntegrationTests\Helpers\JSendPayloadCollectionTestHelper.cs" />
     <Compile Include="IntegrationTests\Helpers\JSendPayloadTestHelper.cs" />
