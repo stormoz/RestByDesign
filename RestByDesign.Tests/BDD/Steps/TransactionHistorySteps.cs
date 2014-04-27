@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using Microsoft.Owin.Testing;
 using RestByDesign.Infrastructure.JSend;
 using RestByDesign.Models;
-using RestByDesign.Tests.IntegrationTests.Core;
+using RestByDesign.Models.Helpers;
+using RestByDesign.Tests.BDD.Base;
 using RestByDesign.Tests.IntegrationTests.Helpers;
 using Shouldly;
 using TechTalk.SpecFlow;
@@ -10,16 +10,9 @@ using TechTalk.SpecFlow;
 namespace RestByDesign.Tests.BDD.Steps
 {
     [Binding]
-    public class TransactionHistorySteps
+    public class TransactionHistorySteps : OwinBddTestBase
     {
-        private TestServer _server;
-        private JSendPayloadCollectionTestHelper<TransactionModel> jsendTransactions;
-
-        [BeforeScenario]
-        public void BeforeScenario()
-        {
-            _server = TestServer.Create<Startup>();
-        }
+        private JSendPayload<CollectionWrapper<TransactionModel>> jsendTransactions;
 
         [Given("I call get transactions for a certain accounts")]
         public void GetTransactions()
@@ -27,7 +20,7 @@ namespace RestByDesign.Tests.BDD.Steps
             var id = "111";
             var url = string.Format("/api/accounts/{0}/transactions", id);
 
-            jsendTransactions = _server.GetJsendForCollection<TransactionModel>(url);
+            jsendTransactions = Server.GetJsendForCollection<TransactionModel>(url);
         }
 
         [Then("the result should contains list of transactions")]

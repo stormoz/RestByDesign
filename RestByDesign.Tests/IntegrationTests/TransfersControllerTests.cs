@@ -9,7 +9,7 @@ using Shouldly;
 
 namespace RestByDesign.Tests.IntegrationTests
 {
-    public class TransfersControllerTests : OwinIntegrationTest
+    public class TransfersControllerTests : OwinIntegrationTestBase
     {
         [Test]
         public void Transfers_Post()
@@ -19,7 +19,7 @@ namespace RestByDesign.Tests.IntegrationTests
             var id = "1";
             var url = string.Format("/api/clients/{0}/transfers", id);
 
-            var jSend = Server.GetJsendObject(url, HttpVerbs.Post, new { accountFrom = "111", accountTo = "222", amount = 1000, description = "car" });
+            var jSend = Server.GetJsendObject<object>(url, HttpVerbs.Post, new { accountFrom = "111", accountTo = "222", amount = 1000, description = "car" });
             jSend.Status.ShouldBe(JSendStatus.Success);
 
             DummyDataHelper.GetList<Transaction>().Count.ShouldBe(4);
@@ -31,7 +31,7 @@ namespace RestByDesign.Tests.IntegrationTests
             var id = "1";
             var url = string.Format("/api/clients/{0}/transfers", id);
 
-            var jSend = Server.GetJsendObject(url, HttpVerbs.Post, new { accountFrom = "111", accountTo = "222", amount = 11000, description = "car" });
+            var jSend = Server.GetJsendObject<object>(url, HttpVerbs.Post, new { accountFrom = "111", accountTo = "222", amount = 11000, description = "car" });
             jSend.Status.ShouldBe(JSendStatus.Fail);
         }
     }

@@ -10,7 +10,7 @@ using Shouldly;
 
 namespace RestByDesign.Tests.IntegrationTests
 {
-    public class SmartTagsControllerTests : OwinIntegrationTest
+    public class SmartTagsControllerTests : OwinIntegrationTestBase
     {
         [Test]
         public void SmartTags_GetAll_GetByAccountId()
@@ -78,7 +78,7 @@ namespace RestByDesign.Tests.IntegrationTests
         {
             var id = "3";
             var url = string.Format("/api/smarttags/{0}", id);
-            var response = Server.GetJsendObject(url);
+            var response = Server.GetJsendObject<object>(url);
 
             response.Status.ShouldBe(JSendStatus.Error);
             response.Code.ShouldBe((int)HttpStatusCode.NotFound);
@@ -104,7 +104,7 @@ namespace RestByDesign.Tests.IntegrationTests
             var id = "1";
             var url = string.Format("/api/smarttags/{0}", id);
 
-            var updatedjSend = Server.GetJsendObject(url, HttpVerbs.Patch, new { active = (bool?)null });
+            var updatedjSend = Server.GetJsendObject<object>(url, HttpVerbs.Patch, new { active = (bool?)null });
             updatedjSend.Status.ShouldBe(JSendStatus.Fail);
 
             var jSend = Server.GetJsendObject<SmartTagModel>(url);

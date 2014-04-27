@@ -40,6 +40,16 @@ namespace RestByDesign.Infrastructure.DataAccess
             return list.SingleOrDefault(filter.Compile());
         }
 
+        public int Count(Expression<Func<TEntity, bool>> filter = null)
+        {
+            var query = list.AsQueryable();
+
+            if (filter != null)
+                query = query.Where(filter);
+
+            return query.Count();
+        }
+
         public virtual void Insert(TEntity entity)
         {
             list.Add(entity);

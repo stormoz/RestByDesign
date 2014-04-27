@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Microsoft.Owin.Testing;
 using Newtonsoft.Json;
 using RestByDesign.Infrastructure.JSend;
+using RestByDesign.Models.Helpers;
 using RestByDesign.Tests.IntegrationTests.Core;
 
 namespace RestByDesign.Tests.IntegrationTests.Helpers
@@ -15,25 +16,18 @@ namespace RestByDesign.Tests.IntegrationTests.Helpers
         private static readonly JsonMediaTypeFormatter JsonFormatter = Startup.GlobalConfiguration.Formatters.OfType<JsonMediaTypeFormatter>().Single();
         private static readonly JsonSerializerSettings JsonSerializerSettings = JsonFormatter.SerializerSettings;
 
-        public static JSendPayload GetJsendObject(this TestServer server, string url, HttpVerbs httpMethod = HttpVerbs.Get, object body = null)
+        public static JSendPayload<T> GetJsendObject<T>(this TestServer server, string url, HttpVerbs httpMethod = HttpVerbs.Get, object body = null) where T : class
         {
             var responseString = GetResponseString(server, url, httpMethod, body);
 
-            return JsonConvert.DeserializeObject<JSendPayload>(responseString, JsonSerializerSettings);
+            return JsonConvert.DeserializeObject<JSendPayload<T>>(responseString, JsonSerializerSettings);
         }
 
-        public static JSendPayloadTestHelper<T> GetJsendObject<T>(this TestServer server, string url, HttpVerbs httpMethod = HttpVerbs.Get, object body = null) where T : class
+        public static JSendPayload<CollectionWrapper<T>> GetJsendForCollection<T>(this TestServer server, string url, HttpVerbs httpMethod = HttpVerbs.Get, object body = null) where T : class
         {
             var responseString = GetResponseString(server, url, httpMethod, body);
 
-            return JsonConvert.DeserializeObject<JSendPayloadTestHelper<T>>(responseString, JsonSerializerSettings);
-        }
-
-        public static JSendPayloadCollectionTestHelper<T> GetJsendForCollection<T>(this TestServer server, string url, HttpVerbs httpMethod = HttpVerbs.Get, object body = null) where T : class
-        {
-            var responseString = GetResponseString(server, url, httpMethod, body);
-
-            return JsonConvert.DeserializeObject<JSendPayloadCollectionTestHelper<T>>(responseString, JsonSerializerSettings);
+            return JsonConvert.DeserializeObject<JSendPayload<CollectionWrapper<T>>>(responseString, JsonSerializerSettings);
         }
 
         public static string GetResponseString(this TestServer server, string uri, HttpVerbs httpMethod = HttpVerbs.Get, object body = null)

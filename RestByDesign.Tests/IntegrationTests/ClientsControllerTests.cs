@@ -8,7 +8,7 @@ using Shouldly;
 
 namespace RestByDesign.Tests.IntegrationTests
 {
-    public class ClientsControllerTests : OwinIntegrationTest
+    public class ClientsControllerTests : OwinIntegrationTestBase
     {
         [Test]
         public void Clients_GetById()

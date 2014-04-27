@@ -58,6 +58,16 @@ namespace RestByDesign.Infrastructure.DataAccess
             return query.SingleOrDefault(filter);
         }
 
+        public int Count(Expression<Func<TEntity, bool>> filter = null)
+        {
+            var query = DbSet.AsExpandable();
+
+            if (filter != null)
+                query = query.Where(filter);
+
+            return query.Count();
+        }
+
         public virtual void Insert(TEntity entity)
         {
             DbSet.Add(entity);

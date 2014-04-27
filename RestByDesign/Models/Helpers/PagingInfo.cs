@@ -8,10 +8,13 @@ namespace RestByDesign.Models.Helpers
         private int _skip;
         private int _take;
 
-        public PagingInfo()
+        public PagingInfo() : this(0, 10)
+        { }
+
+        public PagingInfo(int skip = 0, int take = 10)
         {
-            Skip = 0;
-            Take = 10;
+            Skip = skip;
+            Take = take;
         }
 
         public int Skip

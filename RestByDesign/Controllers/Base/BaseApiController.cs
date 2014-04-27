@@ -1,20 +1,21 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
 using System.Web.Http;
+using System.Web.Http.Results;
 using PersonalBanking.Domain.Model.Core;
 using RestByDesign.Infrastructure.Core;
 using RestByDesign.Infrastructure.Core.Extensions;
 using RestByDesign.Infrastructure.DataAccess;
-using RestByDesign.Infrastructure.JSend;
 using RestByDesign.Infrastructure.Mapping;
 using RestByDesign.Models.Base;
-
 #if ODATA
 using System.Web.Http.OData;
 using System.Web.UI.WebControls;
 #endif
+using RestByDesign.Models.Helpers;
 
 namespace RestByDesign.Controllers.Base
 {
@@ -74,6 +75,12 @@ namespace RestByDesign.Controllers.Base
             UnitOfWork.SaveChanges();
             return Ok(itemModel);
         }
+
+        public OkNegotiatedContentResult<CollectionWrapper<object>> OkCollection(IEnumerable<object> items, int totalCount)
+        {
+            return Ok(new CollectionWrapper<object>(items, totalCount));
+        }
+
 #else
         //Example with Delta (NB: Property binding for Delta is case-sensitive)
         protected IHttpActionResult PatchUpdate<TEntity, TEntityModel>(Expression<Func<TEntity, bool>> filter, Delta<TEntityModel> entityDelta)

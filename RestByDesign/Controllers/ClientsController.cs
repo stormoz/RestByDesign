@@ -31,9 +31,10 @@ namespace RestByDesign.Controllers
         public IHttpActionResult Get([FromUri]PagingInfo pagingInfo, string fields = null)
         {
             var clients = UnitOfWork.ClientRepository.Get(pagingInfo:pagingInfo);
+            var clientsCount = UnitOfWork.ClientRepository.Count();
             var clientsModel = ModelMapper.Map<Client, ClientModel>(clients);
 
-            return Ok(clientsModel.SelectFields(fields));
+            return OkCollection(clientsModel.SelectFields(fields), clientsCount);
         }
 
         //OData example

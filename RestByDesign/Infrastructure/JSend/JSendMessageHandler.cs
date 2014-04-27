@@ -26,7 +26,7 @@ namespace RestByDesign.Infrastructure.JSend
 
                     if (t.Exception != null)
                     {
-                        return request.CreateResponse(new JSendPayload
+                        return request.CreateResponse(new JSendPayload<object>
                         {
                             Status = JSendStatus.Error,
                             Message = t.Exception.Message,
@@ -36,7 +36,7 @@ namespace RestByDesign.Infrastructure.JSend
 
                     if (t.IsCanceled)
                     {
-                        return request.CreateResponse(new JSendPayload
+                        return request.CreateResponse(new JSendPayload<object>
                         {
                             Status = JSendStatus.Fail,
                             Message = "Operation Cancelled",
@@ -44,7 +44,7 @@ namespace RestByDesign.Infrastructure.JSend
                         });
                     }
 
-                    var jsendResponse = responseObject as JSendPayload;
+                    var jsendResponse = responseObject as JSendPayload<object>;
                     if (jsendResponse != null)
                     {
                         return jsendResponse.Code != null ?
@@ -56,7 +56,7 @@ namespace RestByDesign.Infrastructure.JSend
                     {
                         return request.CreateResponse(
                             t.Result.StatusCode,
-                            new JSendPayload
+                            new JSendPayload<object>
                             {
                                 Status = JSendStatus.Error,
                                 Message = t.Result.ReasonPhrase,
@@ -65,7 +65,7 @@ namespace RestByDesign.Infrastructure.JSend
                             });
                     }
 
-                    return request.CreateResponse(new SuccessJSendPayload
+                    return request.CreateResponse(new JSendPayloadSuccess<object>
                     {
                         Status = JSendStatus.Success,
                         Data = responseObject

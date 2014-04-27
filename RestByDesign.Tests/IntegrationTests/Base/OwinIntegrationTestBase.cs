@@ -5,7 +5,7 @@ using RestByDesign.Tests.IntegrationTests.Core;
 
 namespace RestByDesign.Tests.IntegrationTests.Base
 {
-    public class OwinIntegrationTest
+    public class OwinIntegrationTestBase
     {
         public TestServer Server;//http://www.strathweb.com/2013/12/owin-memory-integration-testing/
 

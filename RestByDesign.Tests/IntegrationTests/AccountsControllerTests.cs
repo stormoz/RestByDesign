@@ -9,7 +9,7 @@ using Shouldly;
 
 namespace RestByDesign.Tests.IntegrationTests
 {
-    public class AccountsControllerTests : OwinIntegrationTest
+    public class AccountsControllerTests : OwinIntegrationTestBase
     {
         [Test]
         public void Accounts_GetAll_GetByClientId()
@@ -77,7 +77,7 @@ namespace RestByDesign.Tests.IntegrationTests
         {
             var id = "333";
             var url = string.Format("/api/accounts/{0}", id);
-            var response = Server.GetJsendObject(url);
+            var response = Server.GetJsendObject<object>(url);
 
             response.Status.ShouldBe(JSendStatus.Error);
             response.Code.ShouldBe((int)HttpStatusCode.NotFound);

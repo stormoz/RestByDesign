@@ -26,7 +26,7 @@ namespace RestByDesign.Infrastructure.Core
         {
             return Task.Factory.StartNew(() =>
             {
-                var payload = new JSendPayload { Data = Data, Message = Message, Status = JSendStatus.Fail };
+                var payload = new JSendPayload<object> { Data = Data, Message = Message, Status = JSendStatus.Fail };
                 return Controller.Request.CreateResponse(Code, payload);
             }, cancellationToken);
         }

@@ -15,7 +15,7 @@ namespace RestByDesign.Infrastructure.Core
 
             if (domainException != null)
             {
-                var payload = new JSendPayload { Data = null, Message = string.Join(Environment.NewLine, domainException.ErrorMessages), Status = JSendStatus.Fail };
+                var payload = new JSendPayload<object> { Data = null, Message = string.Join(Environment.NewLine, domainException.ErrorMessages), Status = JSendStatus.Fail };
                 context.ActionContext.Response = context.ActionContext.Request.CreateResponse(HttpStatusCode.BadRequest, payload);
 
                 return;

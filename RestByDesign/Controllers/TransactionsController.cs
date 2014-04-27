@@ -30,9 +30,12 @@ namespace RestByDesign.Controllers
                 TransactionSearchExpression(accountId,filter)
                 , pagingInfo: pagingInfo).ToList();
 
+            var transactionsCount = UnitOfWork.TransactionRepository.Count(
+                TransactionSearchExpression(accountId, filter));
+
             var transactionsModel = ModelMapper.Map<Transaction, TransactionModel>(transactions);
 
-            return Ok(transactionsModel.SelectFields(fields));
+            return OkCollection(transactionsModel.SelectFields(fields), transactionsCount);
         }
 
         private static Expression<Func<Transaction, bool>> TransactionSearchExpression(string accountId, TransactionFilter filter)

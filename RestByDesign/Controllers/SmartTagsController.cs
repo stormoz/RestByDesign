@@ -22,10 +22,11 @@ namespace RestByDesign.Controllers
         public IHttpActionResult GetAllByAccount(string accountId, string fields = null)
         {
             var tags = UnitOfWork.SmartTagRepository.Get(tag => tag.AccountId.Equals(accountId)).ToList();
+            var tagsCount = UnitOfWork.SmartTagRepository.Count(tag => tag.AccountId.Equals(accountId));
 
             var clientModel = ModelMapper.Map<SmartTag, SmartTagModel>(tags);
 
-            return Ok(clientModel.SelectFields(fields));
+            return OkCollection(clientModel.SelectFields(fields), tagsCount);
         }
 
         [Route("api/accounts/{accountId}/smarttags/{smartTagNum}")]

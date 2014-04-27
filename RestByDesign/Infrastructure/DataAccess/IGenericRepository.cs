@@ -15,7 +15,12 @@ namespace RestByDesign.Infrastructure.DataAccess
             PagingInfo pagingInfo = null,
             string includeProperties = "");
 
-        TEntity GetSingle(Expression<Func<TEntity, bool>> filter, string includeProperties = "");
+        TEntity GetSingle(
+            Expression<Func<TEntity, bool>> filter,
+            string includeProperties = "");
+
+        int Count(
+            Expression<Func<TEntity, bool>> filter = null);
 
         void Insert(TEntity entity);
         void Delete(Expression<Func<TEntity, bool>> filter);
