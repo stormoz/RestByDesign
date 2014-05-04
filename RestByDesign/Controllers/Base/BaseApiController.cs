@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
+using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Results;
 using PersonalBanking.Domain.Model.Core;
@@ -35,6 +36,13 @@ namespace RestByDesign.Controllers.Base
         {
             _uow.Dispose();
             base.Dispose(disposing);
+        }
+
+        //for CORS preflight request
+        [AcceptVerbs("Options")]
+        public IHttpActionResult Options()
+        {
+            return Ok();
         }
 
         protected IHttpActionResult Fail(string message, HttpStatusCode httpCode = HttpStatusCode.BadRequest, object data = null)

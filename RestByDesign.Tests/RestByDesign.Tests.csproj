@@ -162,12 +162,13 @@
     <Compile Include="BDD\Steps\TransactionHistorySteps.cs" />
     <Compile Include="IntegrationTests\AccountsControllerTests.cs" />
     <Compile Include="IntegrationTests\Base\OwinIntegrationTestBase.cs" />
+    <Compile Include="IntegrationTests\HandlerTests\HandlerTests.cs" />
     <Compile Include="IntegrationTests\SmartTagsControllerTests.cs" />
     <Compile Include="IntegrationTests\TransactionsControllerTests.cs" />
     <Compile Include="IntegrationTests\TransfersControllerTests.cs" />
     <Compile Include="UnitTests\Controllers\ClientsControllerTests.cs" />
     <Compile Include="UnitTests\Infrastructure\CollectionExtensionsTests.cs" />
-    <Compile Include="IntegrationTests\Helpers\IntegrationTestsExtensions.cs" />
+    <Compile Include="IntegrationTests\Core\Helpers\IntegrationTestsExtensions.cs" />
     <Compile Include="IntegrationTests\Core\Startup.cs" />
     <Compile Include="IntegrationTests\ClientsControllerTests.cs" />
     <Compile Include="UnitTests\Infrastructure\MappingTests.cs" />

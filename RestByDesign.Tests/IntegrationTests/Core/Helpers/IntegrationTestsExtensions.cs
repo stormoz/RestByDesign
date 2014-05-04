@@ -1,7 +1,9 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Formatting;
+using System.Net.Http.Headers;
 using System.Web.Mvc;
 using Microsoft.Owin.Testing;
 using Newtonsoft.Json;
@@ -38,12 +40,15 @@ namespace RestByDesign.Tests.IntegrationTests.Helpers
             return responseString;
         }
 
-        public static HttpResponseMessage GetResponse(this TestServer server, string uri, HttpVerbs httpMethod = HttpVerbs.Get, object body = null)
+        public static HttpResponseMessage GetResponse(this TestServer server, string uri, HttpVerbs httpMethod = HttpVerbs.Get, object body = null, Action<HttpRequestMessage> editRequest = null)
         {
             var request = new HttpRequestMessage(new HttpMethod(httpMethod.ToString()), uri)
             {
-                Content = new ObjectContent(typeof (object), body, JsonFormatter)
+                Content = new ObjectContent(typeof (object), body, JsonFormatter),
             };
+
+            if (editRequest != null)
+                editRequest(request);
 
             var responseTask = server.HttpClient.SendAsync(request).Result;
             return responseTask;

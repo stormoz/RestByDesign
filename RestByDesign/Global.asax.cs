@@ -21,7 +21,7 @@ namespace RestByDesign
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
 
-        internal static void ConfigRestByDesignApp(HttpConfiguration config, bool dummyRepo = false)
+        internal static void ConfigRestByDesignApp(HttpConfiguration config, bool dummyRepo = true)
         {
             //Web Api config
             WebApiConfig.Register(config);

@@ -2,6 +2,8 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using NUnit.Framework;
+using PersonalBanking.Domain.Model;
+using RestByDesign.Infrastructure.DataAccess;
 using RestByDesign.Infrastructure.JSend;
 using RestByDesign.Models;
 using RestByDesign.Tests.IntegrationTests.Base;
@@ -81,7 +83,7 @@ namespace RestByDesign.Tests.IntegrationTests
             var response = Server.GetJsendObject<object>(url);
 
             response.Status.ShouldBe(JSendStatus.Error);
-            response.Code.ShouldBe((int)HttpStatusCode.NotFound);
+            response.Code.ShouldBe((int) HttpStatusCode.NotFound);
         }
 
         [Test]
@@ -92,7 +94,7 @@ namespace RestByDesign.Tests.IntegrationTests
             var jSend = Server.GetJsendObject<SmartTagModel>(url);
             var currentValue = jSend.Data.Active;
 
-            var updatedjSend = Server.GetJsendObject<SmartTagModel>(url, HttpVerbs.Patch, new { active = !currentValue });
+            var updatedjSend = Server.GetJsendObject<SmartTagModel>(url, HttpVerbs.Patch, new {active = !currentValue});
             updatedjSend.Status.ShouldBe(JSendStatus.Success);
             updatedjSend.Data.Id.ShouldNotBe(null);
             updatedjSend.Data.Active.ShouldBe(!currentValue);
@@ -104,11 +106,25 @@ namespace RestByDesign.Tests.IntegrationTests
             var id = "1";
             var url = string.Format("/api/smarttags/{0}", id);
 
-            var updatedjSend = Server.GetJsendObject<object>(url, HttpVerbs.Patch, new { active = (bool?)null });
+            var updatedjSend = Server.GetJsendObject<object>(url, HttpVerbs.Patch, new {active = (bool?) null});
             updatedjSend.Status.ShouldBe(JSendStatus.Fail);
 
             var jSend = Server.GetJsendObject<SmartTagModel>(url);
             jSend.Data.Active.ShouldNotBe(null);
+        }
+
+        [Test]
+        public void SmartTags_Delete()
+        {
+            var tagsTotal = DummyDataHelper.GetList<SmartTag>().Count;
+
+            var id = "1";
+            var url = string.Format("/api/smarttags/{0}", id);
+
+            var jSend = Server.GetJsendObject<object>(url, HttpVerbs.Delete);
+            jSend.Status.ShouldBe(JSendStatus.Success);
+
+            DummyDataHelper.GetList<SmartTag>().Count.ShouldBe(tagsTotal - 1);
         }
     }
 }

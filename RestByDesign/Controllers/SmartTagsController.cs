@@ -75,7 +75,12 @@ namespace RestByDesign.Controllers
         [Route("api/smarttags/{smartTagId}")]
         public IHttpActionResult Delete(string smartTagId)
         {
-            UnitOfWork.SmartTagRepository.Delete(x => x.Id == smartTagId);
+            var smartTag = UnitOfWork.SmartTagRepository.Get(tag => tag.Id.Equals(smartTagId)).SingleOrDefault();
+
+            if (smartTag == null)
+                return NotFound();
+
+            UnitOfWork.SmartTagRepository.Delete(smartTag);
             UnitOfWork.SaveChanges();
             return Ok();
         }

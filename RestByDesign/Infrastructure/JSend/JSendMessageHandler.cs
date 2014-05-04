@@ -1,8 +1,10 @@
-﻿using System.Net;
+﻿using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
+using WebGrease.Css.Extensions;
 
 namespace RestByDesign.Infrastructure.JSend
 {
@@ -13,63 +15,77 @@ namespace RestByDesign.Infrastructure.JSend
             return base.SendAsync(request, cancellationToken)
                 .ContinueWith(t =>
                 {
-                    /*
-                    if (request.Headers.Accept.All(a => a.MediaType != "application/json"))
-                        return t.Result;
+                    //if (request.Headers.Accept.All(a => a.MediaType != "application/json"))
+                    //    return t.Result;
 
                     if (t.Result.Content != null && t.Result.Content.Headers.ContentType.MediaType != "application/json")
                         return t.Result;
-                    */
+
+                    HttpResponseMessage response;
 
                     object responseObject;
                     t.Result.TryGetContentValue(out responseObject);
 
                     if (t.Exception != null)
                     {
-                        return request.CreateResponse(new JSendPayload<object>
+                        response = request.CreateResponse(new JSendPayload<object>
                         {
                             Status = JSendStatus.Error,
                             Message = t.Exception.Message,
                             Data = responseObject ?? t.Exception
                         });
                     }
-
-                    if (t.IsCanceled)
+                    else if (t.IsCanceled)
                     {
-                        return request.CreateResponse(new JSendPayload<object>
+                        response = request.CreateResponse(new JSendPayload<object>
                         {
                             Status = JSendStatus.Fail,
                             Message = "Operation Cancelled",
                             Data = responseObject ?? t.Exception
                         });
                     }
-
-                    var jsendResponse = responseObject as JSendPayload<object>;
-                    if (jsendResponse != null)
+                    else if(responseObject is JSendPayload<object>)
                     {
-                        return jsendResponse.Code != null ?
+                        var jsendResponse = responseObject as JSendPayload<object>;
+                        response = jsendResponse.Code != null ?
                             request.CreateResponse((HttpStatusCode)jsendResponse.Code, responseObject) :
                             request.CreateResponse(responseObject);
                     }
-
-                    if ((int)t.Result.StatusCode >= 400 || t.Result.Content is ObjectContent<HttpError>)
+                    else if ((int)t.Result.StatusCode >= 400 || t.Result.Content is ObjectContent<HttpError>)
                     {
-                        return request.CreateResponse(
+                        var data = responseObject;
+
+                        var errorContent = t.Result.Content as ObjectContent;
+                        if (errorContent != null)
+                        {
+                            var error = errorContent.Value as HttpError;
+
+                            if (error != null)
+                                data = error;
+                        }
+
+                        response = request.CreateResponse(
                             t.Result.StatusCode,
                             new JSendPayload<object>
                             {
                                 Status = JSendStatus.Error,
                                 Message = t.Result.ReasonPhrase,
                                 Code = (int)t.Result.StatusCode,
-                                Data = responseObject
+                                Data = data
                             });
                     }
-
-                    return request.CreateResponse(new JSendPayloadSuccess<object>
+                    else
                     {
-                        Status = JSendStatus.Success,
-                        Data = responseObject
-                    });
+                        response = request.CreateResponse(new JSendPayloadSuccess<object>
+                        {
+                            Status = JSendStatus.Success,
+                            Data = responseObject
+                        });
+                    }
+
+                    t.Result.Headers.ToArray().ForEach(h=>response.Headers.Add(h.Key, h.Value));
+
+                    return response;
 
                 }, cancellationToken);
         }

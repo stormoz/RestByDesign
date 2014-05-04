@@ -14,7 +14,7 @@ namespace RestByDesign.Tests.IntegrationTests
         [Test]
         public void Transfers_Post()
         {
-            DummyDataHelper.GetList<Transaction>().Count.ShouldBe(2);
+            var tranactionsTotal = DummyDataHelper.GetList<Transaction>().Count;
 
             var id = "1";
             var url = string.Format("/api/clients/{0}/transfers", id);
@@ -22,7 +22,7 @@ namespace RestByDesign.Tests.IntegrationTests
             var jSend = Server.GetJsendObject<object>(url, HttpVerbs.Post, new { accountFrom = "111", accountTo = "222", amount = 1000, description = "car" });
             jSend.Status.ShouldBe(JSendStatus.Success);
 
-            DummyDataHelper.GetList<Transaction>().Count.ShouldBe(4);
+            DummyDataHelper.GetList<Transaction>().Count.ShouldBe(tranactionsTotal + 2);
         }
 
         [Test]

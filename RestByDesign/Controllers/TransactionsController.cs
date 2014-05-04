@@ -26,12 +26,18 @@ namespace RestByDesign.Controllers
             if(!ModelState.IsValid)
                 return Fail("Model state is invalid", data: new { errors = ModelState.Errors() });
 
+            if(pagingInfo == null)
+                pagingInfo = new PagingInfo();
+
             var transactions = UnitOfWork.TransactionRepository.Get(
                 TransactionSearchExpression(accountId,filter)
                 , pagingInfo: pagingInfo).ToList();
 
             var transactionsCount = UnitOfWork.TransactionRepository.Count(
                 TransactionSearchExpression(accountId, filter));
+
+            //var nextLink = Url.Link("Transactions.Get1", new { fields, take = pagingInfo.Take, skip = pagingInfo.SkipNext(transactionsCount)});
+            //var prevLink = Url.Link("Transactions.Get1", new { fields, take = pagingInfo.Take, skip = pagingInfo.PrevSkip(transactionsCount) });
 
             var transactionsModel = ModelMapper.Map<Transaction, TransactionModel>(transactions);
 

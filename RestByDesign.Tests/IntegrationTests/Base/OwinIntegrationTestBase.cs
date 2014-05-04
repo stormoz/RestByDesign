@@ -15,10 +15,15 @@ namespace RestByDesign.Tests.IntegrationTests.Base
             Server = TestServer.Create<Startup>();
         }
 
+        [TearDown]
+        public void OnAfterEachTest()
+        {
+            DummyDataHelper.ResetData();
+        }
+
         [TestFixtureTearDown]
         public void FixtureDispose()
         {
-            DummyDataHelper.ResetData();
             Server.Dispose();
         }
     }

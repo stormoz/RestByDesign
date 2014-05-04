@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Net.Http.Formatting;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using CacheCow.Server;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
@@ -31,17 +32,19 @@ namespace RestByDesign
 #if (DEBUG)
             jsonFormatter.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
 #endif
+            // CORS
+            //config.EnableCors();
+            var attr = new EnableCorsAttribute("*", "*", "*");// CORS support for all controllers
+            config.EnableCors(attr);
+
             // Etag-cache config for Get methods
             config.MessageHandlers.Add(new CachingHandler(config));
 
             // HEAD verb support
-            config.MessageHandlers.Add(new CachingHandler(config));
+            config.MessageHandlers.Add(new HeadHandler());
 
             // Jsend
             config.MessageHandlers.Add(new JSendMessageHandler());
-
-            // CORS
-            config.EnableCors();
 
             // Exception handler attribute
             config.Filters.Add(new CustomExceptionAttribute());

@@ -210,6 +210,7 @@
     <Compile Include="Controllers\Base\BaseApiController.cs" />
     <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Infrastructure\Core\CustomExceptionAttribute.cs" />
+    <Compile Include="Infrastructure\Core\Extensions\ExceptionExtensions.cs" />
     <Compile Include="Infrastructure\Core\FailResult.cs" />
     <Compile Include="Infrastructure\Core\HeadHandler.cs" />
     <Compile Include="Infrastructure\Core\Helpers\IocHelper.cs" />
@@ -248,6 +249,7 @@
     <Compile Include="Models\Base\BaseModel.cs" />
     <Compile Include="Models\ClientModel.cs" />
     <Compile Include="Infrastructure\Core\Helpers\FieldsHelper.cs" />
+    <Compile Include="Models\Helpers\ApiError.cs" />
     <Compile Include="Models\Helpers\CollectionWrapper.cs" />
     <Compile Include="Models\Helpers\PagingInfo.cs" />
     <Compile Include="Infrastructure\DataAccess\RestByDesignContext.cs" />

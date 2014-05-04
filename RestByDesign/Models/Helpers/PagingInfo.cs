@@ -41,6 +41,16 @@ namespace RestByDesign.Models.Helpers
             }
         }
 
+        public int? SkipNext(int total)
+        {
+            return Skip + Take >= total ? (int?)null : Skip + Take;
+        }
+
+        public int? PrevSkip(int total)
+        {
+            return Skip - Take < 0 ? (int?)null : Skip - Take;
+        }
+
         public IQueryable<TEntity> GetPagedQuery<TEntity>(IQueryable<TEntity> query) where TEntity : class
         {
             if(Skip > 0)

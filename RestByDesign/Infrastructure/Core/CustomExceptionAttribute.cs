@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http.Filters;
 using PersonalBanking.Domain.Model.Exceptions;
+using RestByDesign.Infrastructure.Core.Extensions;
 using RestByDesign.Infrastructure.JSend;
 
 namespace RestByDesign.Infrastructure.Core
@@ -20,8 +21,12 @@ namespace RestByDesign.Infrastructure.Core
 
                 return;
             }
+#if DEBUG
+            context.ActionContext.Response = context.Request.CreateResponse(HttpStatusCode.InternalServerError, context.Exception.ToApiError());
+#else
 
             context.ActionContext.Response = context.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, context.Exception);
+#endif
         }
     }
 }
