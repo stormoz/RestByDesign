@@ -44,7 +44,7 @@ namespace RestByDesign.Tests.IntegrationTests.Helpers
         {
             var request = new HttpRequestMessage(new HttpMethod(httpMethod.ToString()), uri)
             {
-                Content = new ObjectContent(typeof (object), body, JsonFormatter),
+                Content = new ObjectContent(typeof (object), body, JsonFormatter)
             };
 
             if (editRequest != null)

@@ -1,5 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using NUnit.Framework;
+using RestByDesign.Infrastructure.Core.Extensions;
 using RestByDesign.Tests.IntegrationTests.Base;
 using RestByDesign.Tests.IntegrationTests.Helpers;
 using System.Web.Mvc;
@@ -61,6 +63,19 @@ namespace RestByDesign.Tests.IntegrationTests.HandlerTests
             });
 
             response.Headers.ShouldContain(h => h.Key.Equals("Access-Control-Allow-Origin"));
+        }
+
+        [Test]
+        public void TestOptionsHandler()
+        {
+            var url = string.Format("/api/smarttags");
+
+            var response = Server.GetResponse(url, HttpVerbs.Options);
+
+            var supportedMethods = response.Headers.First(h => h.Key.EqualsIc("Access-Control-Allow-Methods")).Value.First();
+            supportedMethods.ShouldContain("GET");
+            supportedMethods.ShouldContain("PATCH");
+            supportedMethods.ShouldContain("DELETE");
         }
     }
 }

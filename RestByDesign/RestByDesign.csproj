@@ -211,10 +211,12 @@
     <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Infrastructure\Core\CustomExceptionAttribute.cs" />
     <Compile Include="Infrastructure\Core\Extensions\ExceptionExtensions.cs" />
+    <Compile Include="Infrastructure\Core\Extensions\RequestExtensions.cs" />
     <Compile Include="Infrastructure\Core\FailResult.cs" />
     <Compile Include="Infrastructure\Core\HeadHandler.cs" />
     <Compile Include="Infrastructure\Core\Helpers\IocHelper.cs" />
     <Compile Include="Infrastructure\Core\NotPatchableAttribute.cs" />
+    <Compile Include="Infrastructure\Core\OptionsHandler.cs" />
     <Compile Include="Infrastructure\Core\SystemTime.cs" />
     <Compile Include="Infrastructure\DataAccess\DummyDataHelper.cs" />
     <Compile Include="Infrastructure\DataAccess\RestByDesignContextInitializer.cs" />

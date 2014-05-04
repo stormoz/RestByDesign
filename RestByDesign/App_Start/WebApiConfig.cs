@@ -32,10 +32,8 @@ namespace RestByDesign
 #if (DEBUG)
             jsonFormatter.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
 #endif
-            // CORS
-            //config.EnableCors();
-            var attr = new EnableCorsAttribute("*", "*", "*");// CORS support for all controllers
-            config.EnableCors(attr);
+
+            config.MessageHandlers.Add(new OptionsHandler());
 
             // Etag-cache config for Get methods
             config.MessageHandlers.Add(new CachingHandler(config));
@@ -48,6 +46,11 @@ namespace RestByDesign
 
             // Exception handler attribute
             config.Filters.Add(new CustomExceptionAttribute());
+
+            // CORS
+            //config.EnableCors();
+            var attr = new EnableCorsAttribute("*", "*", "*");// CORS support for all controllers
+            config.EnableCors(attr);
         }
     }
 }
