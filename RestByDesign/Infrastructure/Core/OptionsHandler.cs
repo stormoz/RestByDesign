@@ -29,6 +29,9 @@ namespace RestByDesign.Infrastructure.Core
             if (!supportedMethods.Any())
                 return Task.Factory.StartNew(() => request.CreateResponse(HttpStatusCode.NotFound), cancellationToken);
 
+            if (supportedMethods.Contains("GET") && !supportedMethods.Contains("HEAD"))
+                supportedMethods.Add("HEAD");
+
             return Task.Factory.StartNew(() =>
             {
                 var resp = new HttpResponseMessage(HttpStatusCode.OK);

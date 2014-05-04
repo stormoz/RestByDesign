@@ -76,6 +76,8 @@ namespace RestByDesign.Tests.IntegrationTests.HandlerTests
             supportedMethods.ShouldContain("GET");
             supportedMethods.ShouldContain("PATCH");
             supportedMethods.ShouldContain("DELETE");
+
+            supportedMethods.ShouldNotContain("POST");
         }
     }
 }
