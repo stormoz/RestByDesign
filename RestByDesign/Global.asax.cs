@@ -1,4 +1,6 @@
 ﻿using System.Data.Entity;
+using System.Data.SqlClient;
+using System.Web.Configuration;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -14,7 +16,7 @@ namespace RestByDesign
         {
             AreaRegistration.RegisterAllAreas();
 
-            GlobalConfiguration.Configure(config => ConfigRestByDesignApp(config));
+            GlobalConfiguration.Configure(config => ConfigRestByDesignApp(config, false));
 
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

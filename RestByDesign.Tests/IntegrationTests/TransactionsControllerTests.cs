@@ -1,7 +1,6 @@
+using System;
 using System.Linq;
 using NUnit.Framework;
-using PersonalBanking.Domain.Model;
-using RestByDesign.Infrastructure.DataAccess;
 using RestByDesign.Infrastructure.JSend;
 using RestByDesign.Models;
 using RestByDesign.Tests.IntegrationTests.Base;
@@ -26,8 +25,9 @@ namespace RestByDesign.Tests.IntegrationTests
         [Test]
         public void Transactions_GetAllByAccountId_Paged()
         {
-            var transactionsTotal = DummyDataHelper.GetList<Transaction>().Count;
             var id = "111";
+            var transactionsTotal = Uow.TransactionRepository.Count(t => t.AccountId == id);
+            
             var url = string.Format("/api/accounts/{0}/transactions?skip=0&take=1", id);
 
             var jSend = Server.GetJsendForCollection<TransactionModel>(url);
@@ -57,11 +57,14 @@ namespace RestByDesign.Tests.IntegrationTests
         public void Transactions_GetAllByAccountId_TransactionFilter()
         {
             var id = "111";
-            var url = string.Format("/api/accounts/{0}/transactions?dateFrom=2014-04-01&amountFrom=100", id);
+            var filteredTransactions = Uow.TransactionRepository.Count(t =>
+                t.AccountId == id && t.EffectDate >= new DateTime(2014, 03, 15) && t.EffectDate <= new DateTime(2014, 04, 01) && t.Amount >= 100);
+
+            var url = string.Format("/api/accounts/{0}/transactions?dateFrom=2014-03-15&dateTo=2014-04-01&amountFrom=100", id);
 
             var jSend = Server.GetJsendForCollection<TransactionModel>(url);
             jSend.Status.ShouldBe(JSendStatus.Success);
-            jSend.Data.Items.Count().ShouldBe(1);
+            jSend.Data.Items.Count().ShouldBe(filteredTransactions);
         }
     }
 }

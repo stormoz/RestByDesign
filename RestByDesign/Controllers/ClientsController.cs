@@ -17,9 +17,9 @@ namespace RestByDesign.Controllers
         public ClientsController(IUnitOfWork uow) : base(uow)
         {  }
 
-        public IHttpActionResult GetById(string id, string fields = null)
+        public IHttpActionResult GetById(string id, string fields = null, string expand = null)
         {
-            var client = UnitOfWork.ClientRepository.GetSingle(x=>x.Id == id);
+            var client = UnitOfWork.ClientRepository.GetSingle(x => x.Id == id, expand);
 
             if (client == null)
                 return NotFound();

@@ -15,7 +15,7 @@ namespace RestByDesign.Infrastructure.Mapping
                 if (AlreadyRun)
                     return;
 
-                ModelMapper.AddMapping<Client, ClientModel>(client => new ClientModel { Id = client.Id, Name = client.Name });
+                ModelMapper.AddMapping<Client, ClientModel>(client => new ClientModel { Id = client.Id, Name = client.Name, Accounts = ModelMapper.Map<Account, AccountModel>(client.Accounts)});
                 ModelMapper.AddMapping<Account, AccountModel>(account => new AccountModel { Id = account.Id, Name = account.Name, Balance = account.Balance });
                 ModelMapper.AddMapping<SmartTag, SmartTagModel>(tag => new SmartTagModel { Id = tag.Id, Version = tag.Version, Active = tag.Active });
                 ModelMapper.AddMapping<SmartTagModel, SmartTag>((tagModel, tag) =>

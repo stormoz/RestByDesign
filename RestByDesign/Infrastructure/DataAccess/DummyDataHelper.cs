@@ -43,25 +43,34 @@ namespace RestByDesign.Infrastructure.DataAccess
         private static void InitData()
         {
             Clients = GetClients();
+
             Accounts = GetAccounts();
+
+            foreach (var account in Accounts)
+            {
+                account.Client = Clients[0];
+            }
+
+            Clients[0].Accounts = Accounts;
+
             SmartTags = GetSmartTags();
             Transactions = GetTransactions();
         }
 
         public static IList<Client> GetClients()
         {
-            return new[]
-            {
-                new Client("1", "John Doe")
-            }.ToList();
+            var client = new Client("1", "John Doe");
+            
+
+            return new[] { client }.ToList();
         }
 
         public static IList<Account> GetAccounts()
         {
             return new[]
             {
-                new Account("111","Savings",10000,false,"1"),
-                new Account("222","Cheque",100,false,"1")
+                new Account("111","Savings",10000,false),
+                new Account("222","Cheque",100,false)
             }.ToList();
         }
 

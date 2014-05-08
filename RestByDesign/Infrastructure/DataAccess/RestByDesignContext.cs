@@ -7,7 +7,9 @@ namespace RestByDesign.Infrastructure.DataAccess
     public class RestByDesignContext : DbContext
     {       
         public RestByDesignContext(string nameOrConnectionString) : base(nameOrConnectionString)
-        { }
+        {
+            Configuration.LazyLoadingEnabled = false;
+        }
 
         public DbSet<Client> Clients { get; set; }
         public DbSet<Account> Accounts { get; set; }

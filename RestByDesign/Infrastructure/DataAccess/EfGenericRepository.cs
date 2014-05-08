@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
-using LinqKit;
+
 using PersonalBanking.Domain.Model.Core;
+using RestByDesign.Infrastructure.Core.Extensions;
 using RestByDesign.Models.Helpers;
 
 namespace RestByDesign.Infrastructure.DataAccess
@@ -17,6 +19,10 @@ namespace RestByDesign.Infrastructure.DataAccess
         public EfGenericRepository(RestByDesignContext context)
         {
             Context = context;
+#if DEBUG
+            // Log EF activity
+            Context.Database.Log = Log;
+#endif
             DbSet = context.Set<TEntity>();
         }
 
@@ -26,41 +32,33 @@ namespace RestByDesign.Infrastructure.DataAccess
             PagingInfo pagingInfo = null,
             string includeProperties = "")
         {
-            var query = DbSet.AsExpandable();
+            var query = filter != null ? DbSet.Where(filter) : DbSet.Select(x => x);
 
-            if (filter != null)
-                query = query.Where(filter);
+            query = query.WithIncluded(includeProperties);
 
-            if (!string.IsNullOrWhiteSpace(includeProperties))
-            {
-                var props = includeProperties.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries);
-                query = props.Aggregate(query, (current, prop) => current.Include(prop));
-            }
+            if (orderBy != null)
+                query = orderBy(query);
 
             if (pagingInfo != null)
-                query = pagingInfo.GetPagedQuery(query);
+                query = pagingInfo.GetPagedQuery(orderBy != null ? query : query.OrderBy(x=>x.Id));
 
-            return (orderBy != null ? orderBy(query) : query).ToList();
+            return query.ToList();
         }
 
         public virtual TEntity GetSingle(
             Expression<Func<TEntity,bool>> filter,
             string includeProperties = "")
         {
-            var query = DbSet.AsExpandable();
+            var query = DbSet.Where(filter);
 
-            if (!string.IsNullOrWhiteSpace(includeProperties))
-            {
-                var props = includeProperties.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                query = props.Aggregate(query, (current, prop) => current.Include(prop));
-            }
+            query = query.WithIncluded(includeProperties);
 
-            return query.SingleOrDefault(filter);
+            return query.SingleOrDefault();
         }
 
         public int Count(Expression<Func<TEntity, bool>> filter = null)
         {
-            var query = DbSet.AsExpandable();
+            var query = filter != null ? DbSet.Where(filter) : DbSet.Select(x => x);
 
             if (filter != null)
                 query = query.Where(filter);
@@ -93,6 +91,11 @@ namespace RestByDesign.Infrastructure.DataAccess
         {
             DbSet.Attach(entityToUpdate);
             Context.Entry(entityToUpdate).State = EntityState.Modified;
+        }
+
+        private static void Log(string value)
+        {
+            Debug.WriteLine(value);
         }
     }
 }

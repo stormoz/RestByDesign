@@ -54,14 +54,33 @@ namespace RestByDesign.Tests.IntegrationTests
         }
 
         [Test]
-        public void Clients_GetAll_WithFieldFilter()
+        public void Clients_GetAll_WithFieldFilter_CaseInsensitive()
         {
-            var url = "/api/clients?fields=Name";
+            var url = "/api/clients?fields=name";
             var jSend = Server.GetJsendForCollection<ClientModel>(url);
 
             jSend.Status.ShouldBe(JSendStatus.Success);
             jSend.Data.Items.ShouldAllBe(x => x.Id == null);
             jSend.Data.Items.ShouldAllBe(x => x.Name != null);
+        }
+
+        [Test]
+        public void Clients_GetById_Expand()
+        {
+            var clientId = "1";
+            var url = string.Format("/api/clients/{0}?expand=Accounts", clientId);
+            var jSend = Server.GetJsendObject<ClientModel>(url);
+
+            jSend.Status.ShouldBe(JSendStatus.Success);
+            jSend.Data.Id.ShouldBe(clientId);
+            jSend.Data.Accounts.Count().ShouldBeGreaterThan(0);
+
+            url = string.Format("/api/clients/{0}", clientId);
+            jSend = Server.GetJsendObject<ClientModel>(url);
+
+            jSend.Status.ShouldBe(JSendStatus.Success);
+            jSend.Data.Id.ShouldBe(clientId);
+            jSend.Data.Accounts.ShouldBe(null);
         }
     }
 }

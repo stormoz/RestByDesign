@@ -73,10 +73,14 @@ namespace RestByDesign.Infrastructure.Mapping
             where TFrom : class
             where TTo : class
         {
-            if (items == null)
-                throw new ArgumentNullException("items");
+            return items == null ? null : MapCollection<TFrom, TTo>(items);
+        }
 
-            if (!items.Any())
+        public static IEnumerable<TTo> MapCollection<TFrom, TTo>(IEnumerable<TFrom> items)
+            where TFrom : class
+            where TTo : class
+        {
+            if(!items.Any())
                 yield break;
 
             var key = GetKey<TFrom, TTo>();

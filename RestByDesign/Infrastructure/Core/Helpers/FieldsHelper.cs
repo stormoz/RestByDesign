@@ -32,8 +32,8 @@ namespace RestByDesign.Infrastructure.Core.Helpers
             var fieldsList = PrepareFieldList<T>(fields);
 
             var type = typeof(T);
-            var members = type.GetFields(bindingFlags).Where(p => fieldsList.Contains(p.Name)).Cast<MemberInfo>().ToList();
-            members.AddRange(type.GetProperties(bindingFlags).Where(p => fieldsList.Contains(p.Name)).Cast<MemberInfo>().ToList());
+            var members = type.GetFields(bindingFlags).Where(p => fieldsList.Contains(p.Name.ToLower())).Cast<MemberInfo>().ToList();
+            members.AddRange(type.GetProperties(bindingFlags).Where(p => fieldsList.Contains(p.Name.ToLower())).Cast<MemberInfo>().ToList());
 
             var newTypeName = GetTypeName(type, fieldsList);
             var newTypeLazy = typesCache.GetOrAdd(newTypeName, s => new Lazy<Type>(() => CreateNewType(members, newTypeName), LazyThreadSafetyMode.ExecutionAndPublication));
@@ -56,7 +56,7 @@ namespace RestByDesign.Infrastructure.Core.Helpers
             if (fields == null)
                 throw new ArgumentNullException("fields");
 
-            var fieldsList = fields.Where(x=>!string.IsNullOrWhiteSpace(x)).Select(x => x.Trim()).OrderBy(x => x).ToList();
+            var fieldsList = fields.Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => x.Trim().ToLower()).OrderBy(x => x).Distinct().ToList();
 
             if (fieldsList.Empty())
                 throw new ArgumentException("Should not be empty.", "fields");
@@ -69,7 +69,7 @@ namespace RestByDesign.Infrastructure.Core.Helpers
 
         private static string GetTypeName(Type type, IEnumerable<string> fieldsList)
         {
-            return "Anon_" + string.Concat(type.FullName, "_", string.Join("_", fieldsList)).GetHashCode().ToString().Replace("-","_");
+            return "Anon_" + string.Concat(type.FullName, "_", string.Join("_", fieldsList)).GetHashCode().ToString().Replace("-", "_");
         }
 
         private static Type CreateNewType(IEnumerable<MemberInfo> members, string typeName)

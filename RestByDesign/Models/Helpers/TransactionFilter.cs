@@ -1,6 +1,7 @@
 using System;
 using System.Linq.Expressions;
 using PersonalBanking.Domain.Model;
+using RestByDesign.Infrastructure.Core.Extensions;
 using RestByDesign.Models.Enums;
 
 namespace RestByDesign.Models.Helpers
@@ -15,15 +16,23 @@ namespace RestByDesign.Models.Helpers
 
         public Expression<Func<Transaction, bool>> GetFilterExpression()
         {
-            Expression<Func<Transaction, bool>> exp = tr =>
-                (DateFrom == null || tr.EffectDate >= DateFrom.Value) &&
-                (DateTo == null || tr.EffectDate <= DateTo.Value) &&
-                (AmountFrom == null || Math.Abs(tr.Amount) >= AmountFrom.Value) &&
-                (AmountTo == null || Math.Abs(tr.Amount) <= AmountTo.Value) &&
-                (TransactionType == null || TransactionType.Value == Enums.TransactionType.All ||
-                     (TransactionType.Value == Enums.TransactionType.Debit && tr.Amount > 0) ||
-                     (TransactionType.Value == Enums.TransactionType.Credit && tr.Amount < 0)
-                    );
+            var exp = PredicateBuilder.True<Transaction>();
+
+            if (TransactionType.HasValue && TransactionType.Value != Enums.TransactionType.All)
+                exp = TransactionType.Value == Enums.TransactionType.Debit ? exp.And(t => t.Amount > 0) : exp.And(t => t.Amount < 0);
+
+            if (DateFrom.HasValue)
+                exp = exp.And(t => t.EffectDate >= DateFrom.Value);
+
+            if (DateTo.HasValue)
+                exp = exp.And(t => t.EffectDate <= DateTo.Value);
+
+            if (AmountFrom.HasValue)
+                exp = exp.And(t => Math.Abs(t.Amount) >= AmountFrom.Value);
+
+            if (AmountTo.HasValue)
+                exp = exp.And(t => Math.Abs(t.Amount) <= AmountTo.Value);
+
             return exp;
         }
     }

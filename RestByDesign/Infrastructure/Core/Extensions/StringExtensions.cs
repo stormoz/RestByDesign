@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace RestByDesign.Infrastructure.Core.Extensions
 {
@@ -18,6 +19,14 @@ namespace RestByDesign.Infrastructure.Core.Extensions
         public static bool EqualsIc(this string source, string value)
         {
             return source.Equals(value, StringComparison.InvariantCultureIgnoreCase);
+        }
+
+        public static IEnumerable<string> SplitCsv(this string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                return new List<string>();
+
+            return value.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries);
         }
 
         private static string ConvertFirstLetter(this string source, bool lower = true)

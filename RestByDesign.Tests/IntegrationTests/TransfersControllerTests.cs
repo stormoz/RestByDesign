@@ -1,7 +1,5 @@
 using System.Web.Mvc;
 using NUnit.Framework;
-using PersonalBanking.Domain.Model;
-using RestByDesign.Infrastructure.DataAccess;
 using RestByDesign.Infrastructure.JSend;
 using RestByDesign.Tests.IntegrationTests.Base;
 using RestByDesign.Tests.IntegrationTests.Helpers;
@@ -14,7 +12,7 @@ namespace RestByDesign.Tests.IntegrationTests
         [Test]
         public void Transfers_Post()
         {
-            var tranactionsTotal = DummyDataHelper.GetList<Transaction>().Count;
+            var tranactionsTotal = Uow.TransactionRepository.Count();
 
             var id = "1";
             var url = string.Format("/api/clients/{0}/transfers", id);
@@ -22,7 +20,7 @@ namespace RestByDesign.Tests.IntegrationTests
             var jSend = Server.GetJsendObject<object>(url, HttpVerbs.Post, new { accountFrom = "111", accountTo = "222", amount = 1000, description = "car" });
             jSend.Status.ShouldBe(JSendStatus.Success);
 
-            DummyDataHelper.GetList<Transaction>().Count.ShouldBe(tranactionsTotal + 2);
+            Uow.TransactionRepository.Count().ShouldBe(tranactionsTotal + 2);
         }
 
         [Test]

@@ -1,7 +1,6 @@
 using System;
 using PersonalBanking.Domain.Model;
 using RestByDesign.Infrastructure.Core;
-using RestByDesign.Infrastructure.Core.Extensions;
 using RestByDesign.Infrastructure.DataAccess;
 using RestByDesign.Models.Helpers;
 
@@ -18,15 +17,15 @@ namespace RestByDesign.Services
 
         public TransferResult MakeTransfer(string clientId, Transfer transfer)
         {
-            var accountFrom = _uow.AccountRepository.GetSingle(x => x.Id == transfer.AccountIdFrom);
-            var accoutTo = _uow.AccountRepository.GetSingle(x => x.Id == transfer.AccountIdTo);
+            var accountFrom = _uow.AccountRepository.GetSingle(x => x.Id == transfer.AccountIdFrom && x.Client.Id == clientId);
 
-            if (!accountFrom.ClientId.EqualsIc(clientId) ||
-                !accoutTo.ClientId.EqualsIc(clientId))
-                throw new InvalidOperationException("Transfer can only be made between accounts of the client specified.");
+            if(accountFrom == null)
+                throw new InvalidOperationException("Could not find accountFrom for the client.");
 
-            if(accountFrom.ClientId != accoutTo.ClientId)
-                throw new InvalidOperationException("Transfer can only be made between one client's accounts.");
+            var accoutTo = _uow.AccountRepository.GetSingle(x => x.Id == transfer.AccountIdTo && x.Client.Id == clientId);
+            
+            if (accoutTo == null)
+                throw new InvalidOperationException("Could not find accountTo for the client.");
 
             accountFrom.TakeFromAccount(transfer.Amount);
             _uow.AccountRepository.Update(accountFrom);

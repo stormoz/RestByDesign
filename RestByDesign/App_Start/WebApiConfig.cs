@@ -23,12 +23,13 @@ namespace RestByDesign
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            // Content-negotiation
+            // Content-negotiation and formatter config
             config.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
 
             var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().Single();
             jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             jsonFormatter.SerializerSettings.Converters.Add(new JavaScriptDateTimeConverter());
+
 #if (DEBUG)
             jsonFormatter.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
 #endif

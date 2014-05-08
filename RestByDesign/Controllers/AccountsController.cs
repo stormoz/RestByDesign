@@ -18,8 +18,8 @@ namespace RestByDesign.Controllers
         [Route("api/clients/{clientId}/accounts")]
         public IHttpActionResult GetByClientId(string clientId, string fields = null)
         {
-            var accounts = UnitOfWork.AccountRepository.Get(acc => acc.ClientId.Equals(clientId)).ToList();
-            var accountsCount = UnitOfWork.AccountRepository.Count(acc => acc.ClientId.Equals(clientId));
+            var accounts = UnitOfWork.AccountRepository.Get(acc => acc.Client.Id.Equals(clientId)).ToList();
+            var accountsCount = UnitOfWork.AccountRepository.Count(acc => acc.Client.Id.Equals(clientId));
 
             var accountModel = ModelMapper.Map<Account, AccountModel>(accounts);
 
@@ -29,7 +29,7 @@ namespace RestByDesign.Controllers
         [Route("api/clients/{clientId}/accounts/{accountNum}")]
         public IHttpActionResult Get(string clientId, int accountNum, string fields = null)
         {
-            var account = UnitOfWork.AccountRepository.Get(acc => acc.ClientId.Equals(clientId),
+            var account = UnitOfWork.AccountRepository.Get(acc => acc.Client.Id.Equals(clientId),
                 accounts => accounts.OrderBy(acc => acc.Id), new PagingInfo(accountNum - 1, 1)).SingleOrDefault();
 
             if (account == null)

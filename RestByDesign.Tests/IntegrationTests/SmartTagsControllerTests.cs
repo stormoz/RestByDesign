@@ -1,9 +1,9 @@
+using System;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using NUnit.Framework;
 using PersonalBanking.Domain.Model;
-using RestByDesign.Infrastructure.DataAccess;
 using RestByDesign.Infrastructure.JSend;
 using RestByDesign.Models;
 using RestByDesign.Tests.IntegrationTests.Base;
@@ -116,15 +116,19 @@ namespace RestByDesign.Tests.IntegrationTests
         [Test]
         public void SmartTags_Delete()
         {
-            var tagsTotal = DummyDataHelper.GetList<SmartTag>().Count;
+            var smrtTagId = "-1";
+            var smartTagRepo = Uow.SmartTagRepository;
+            smartTagRepo.Insert(new SmartTag(smrtTagId, "111", true, false, 1, new DateTime(2014, 5, 8)));
+            Uow.SaveChanges();
 
-            var id = "1";
-            var url = string.Format("/api/smarttags/{0}", id);
+            var tagsTotal = smartTagRepo.Count();
+
+            var url = string.Format("/api/smarttags/{0}", smrtTagId);
 
             var jSend = Server.GetJsendObject<object>(url, HttpVerbs.Delete);
             jSend.Status.ShouldBe(JSendStatus.Success);
 
-            DummyDataHelper.GetList<SmartTag>().Count.ShouldBe(tagsTotal - 1);
+            smartTagRepo.Count().ShouldBe(tagsTotal - 1);
         }
     }
 }
